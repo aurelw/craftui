@@ -41,6 +41,7 @@ int main(int argc, char **argv) {
          pcl::console::find_switch(argc, argv, "--help"))
     {
         print_usage();
+        exit(0);
     }
     
     std::string filepath = argv[1];
