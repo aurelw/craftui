@@ -21,7 +21,7 @@
 #define __ELEMENT_TYPE_H__
 
 
-//#include <pcl/common/common_headers.h>
+#include <pcl/common/common_headers.h>
 
 #include <opencv2/core/core.hpp>
 #include <iostream>

@@ -19,6 +19,7 @@
 
 #include "elementstorage.h"
 
+#include "time.h"
 
 bool ElementStorage::loadFromFile(const std::string& path) {
     cv::FileStorage fs;
@@ -56,6 +57,17 @@ bool ElementStorage::saveToFile(const std::string& path) {
 
 void ElementStorage::saveMeta(cv::FileStorage& fs) {
     fs << "MetaData" << "{";
+
+    /* a timestamp */
+    time_t timeObj;
+    time(&timeObj);
+    tm *pTime = gmtime(&timeObj);
+    char buffer[100];
+    sprintf(buffer, "%.2d-%.2d-%d %.2d:%.2d:%.2d",
+            pTime->tm_mday, pTime->tm_mon+1, pTime->tm_year+1900,
+            pTime->tm_hour, pTime->tm_min, pTime->tm_sec);
+    fs << "timestamp" << buffer; 
+
     fs << "}";
 }
 
