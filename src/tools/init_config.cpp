@@ -45,7 +45,7 @@ int main(int argc, char **argv) {
     
     std::string filepath = argv[1];
     ElementStorage eStore;
-    bool success = eStore.saveToFile("test.xml");
+    bool success = eStore.saveToFile(filepath);
     if (!success) {
         std::cerr << "[ERROR] Couldn't write to file!" << std::endl;
         exit(1);
