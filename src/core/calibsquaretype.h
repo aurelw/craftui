@@ -27,11 +27,13 @@ class CalibSquareType : public ElementType {
 
     public:
 
+        CalibSquareType() {
+            ElementType::elementname = "calibsquare";
+        }
+
         virtual void loadFromFileStorage(const cv::FileNode& node) override;
         virtual void saveToFileStorage(cv::FileStorage&) override;
         
-        const std::string elementname = "calibsquare";
-
     protected:
 
         // A sheet of A4 paper

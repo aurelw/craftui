@@ -27,10 +27,13 @@ class ButtonType : public ElementType {
 
     public:
 
+        ButtonType() {
+            ElementType::elementname = "button";
+        };
+
         virtual void loadFromFileStorage(const cv::FileNode& node) override;
         virtual void saveToFileStorage(cv::FileStorage&) override;
         
-        const std::string elementname = "button";
 
     protected:
 
@@ -38,6 +41,7 @@ class ButtonType : public ElementType {
         int numPointsThresh = 60;
         // maximum distance in meters from the element to press the button
         int maxDistance = 0.03;
+
 };
 
 

@@ -23,6 +23,7 @@
 #include "buttontype.h"
 #include "calibsquaretype.h"
 #include "slidertype.h"
+#include "element.h"
 
 
 class ElementStorage {
@@ -31,6 +32,10 @@ class ElementStorage {
 
         bool loadFromFile(const std::string& path);
         bool saveToFile(const std::string& path);
+
+        /* access to all UI elements */
+        void addElement(Element::Ptr element);
+        std::vector<Element::Ptr> getElements();
 
 
         /* element types */
@@ -41,10 +46,14 @@ class ElementStorage {
 
     private:
 
-    void loadMeta(const cv::FileStorage&);
-    void loadElementTypes(const cv::FileStorage&);
-    void saveMeta(cv::FileStorage&);
-    void saveElementTypes(cv::FileStorage&);
+        void loadMeta(const cv::FileStorage&);
+        void loadElementTypes(const cv::FileStorage&);
+        void loadElements(const cv::FileStorage&);
+        void saveMeta(cv::FileStorage&);
+        void saveElementTypes(cv::FileStorage&);
+        void saveElements(cv::FileStorage&);
+
+        std::vector<Element::Ptr> elements;
 
 };
 

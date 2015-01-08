@@ -17,33 +17,16 @@
    * along with CraftUI. If not, see <http://www.gnu.org/licenses/>. */
 
 
-#ifndef __ELEMENT_TYPE_H__
-#define __ELEMENT_TYPE_H__
+#include "element.h"
+
+void Element::loadFromFileStorage(const cv::FileNode& node) {
+    node["typename"] >> elementTypeName;
+    node["id"] >> id;
+}
 
 
-#include <pcl/common/common_headers.h>
-
-#include <opencv2/core/core.hpp>
-#include <iostream>
-#include <string>
-
-
-class ElementType {
-
-    public:
-
-        virtual float checkHistogram();
-        virtual void loadFromFileStorage(const cv::FileNode&) = 0;
-        virtual void saveToFileStorage(cv::FileStorage&) = 0;
-
-        std::string elementname = "element";
-
-    protected:
-
-        float primaryHue = 0.0;
-
-};
-
-
-#endif
+void Element::saveToFileStorage(cv::FileStorage& fs) {
+    fs << "typename" << elementTypeName;
+    fs << "id" << id;
+}
 

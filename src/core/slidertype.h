@@ -27,11 +27,13 @@ class SliderType : public ElementType {
 
     public:
 
+        SliderType() {
+            ElementType::elementname = "slider";
+        }
+
         virtual void loadFromFileStorage(const cv::FileNode& node) override;
         virtual void saveToFileStorage(cv::FileStorage&) override;
         
-        const std::string elementname = "slider";
-
     protected:
 
         // minimum number of inside the volume to register a press

@@ -16,15 +16,21 @@
    * You should have received a copy of the GNU General Public License
    * along with CraftUI. If not, see <http://www.gnu.org/licenses/>. */
 
+#include "time.h"
 
 #include "elementstorage.h"
 
-#include "time.h"
 
 bool ElementStorage::loadFromFile(const std::string& path) {
+
+    /* clear old storage */
+    elements.clear();
+
     cv::FileStorage fs;
     fs.open(path, cv::FileStorage::READ);
     loadMeta(fs);   
+    loadElementTypes(fs);
+    loadElements(fs);
     fs.release();
 
     return true;
@@ -44,11 +50,26 @@ void ElementStorage::loadElementTypes(const cv::FileStorage& fs) {
 }
 
 
+void ElementStorage::loadElements(const cv::FileStorage& fs) {
+    cv::FileNode elements_node = fs["Elements"];
+    cv::FileNodeIterator it = elements_node.begin(), it_end = elements_node.end();
+
+    for (; it != it_end; it++) {
+        std::string tname = (*it)["typename"];
+        Element::Ptr element(new Element());
+        element->loadFromFileStorage(*it);
+        elements.push_back(element);
+    }
+
+}
+
+
 bool ElementStorage::saveToFile(const std::string& path) {
     cv::FileStorage fs;
     fs.open(path, cv::FileStorage::WRITE);
     saveMeta(fs);
     saveElementTypes(fs);
+    saveElements(fs);
     fs.release();
 
     return true;
@@ -78,5 +99,30 @@ void ElementStorage::saveElementTypes(cv::FileStorage& fs) {
     sliderType.saveToFileStorage(fs);
     calibSquareType.saveToFileStorage(fs);
     fs << "}";
+}
+
+
+void ElementStorage::saveElements(cv::FileStorage& fs) {
+
+    fs << "Elements" << "{";
+
+    /* create a node for each element and store the element within */
+    for (int i = 0; i<elements.size(); i++) {
+        fs << "elemnt" + std::to_string(i) << "{";
+        elements[i]->saveToFileStorage(fs);
+        fs << "}";
+    }
+
+    fs << "}";
+}
+
+
+void ElementStorage::addElement(Element::Ptr element) {
+    elements.push_back(element);
+}
+
+
+std::vector<Element::Ptr> ElementStorage::getElements() {
+    return elements;
 }
 

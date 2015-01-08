@@ -32,3 +32,4 @@ void ElementType::loadFromFileStorage(const cv::FileNode& node) {
 void ElementType::saveToFileStorage(cv::FileStorage& fs) {
     fs << "primaryHue" << primaryHue;
 }
+
