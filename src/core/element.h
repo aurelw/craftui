@@ -43,6 +43,10 @@ class Element {
 
         /* orientation */
 
+        /* collison */
+        int numPointsThresh;
+        float maxDistance;
+
     protected:
 
 };

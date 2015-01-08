@@ -22,11 +22,19 @@
 void Element::loadFromFileStorage(const cv::FileNode& node) {
     node["typename"] >> elementTypeName;
     node["id"] >> id;
+
+    /* collision configuration */
+    node["numPointsThresh"] >> numPointsThresh;
+    node["maxDistance"] >> maxDistance;
 }
 
 
 void Element::saveToFileStorage(cv::FileStorage& fs) {
     fs << "typename" << elementTypeName;
     fs << "id" << id;
+
+    /* collision configuration */
+    fs << "numPointsThresh" << numPointsThresh;
+    fs << "maxDistance" << maxDistance;
 }
 

@@ -32,9 +32,9 @@ int main(int argc, char **argv) {
     /* create a element storage and fill it with dummy elements */
     ElementStorage eStore;
 
-    Element::Ptr e0(new Element);
-    Element::Ptr e1(new Element);
-    Element::Ptr e2(new Element);
+    Element::Ptr e0(eStore.buttonType.createDefaultElement());
+    Element::Ptr e1(eStore.buttonType.createDefaultElement());
+    Element::Ptr e2(eStore.sliderType.createDefaultElement());
 
     eStore.addElement(e0);
     eStore.addElement(e1);

@@ -34,3 +34,18 @@ void SliderType::saveToFileStorage(cv::FileStorage& fs) {
     fs << "}";
 }
 
+
+Element::Ptr SliderType::createDefaultElement() {
+    Slider::Ptr slider = createDefaultSlider();
+    Element::Ptr element(slider);
+    return element;
+}
+
+Slider::Ptr SliderType::createDefaultSlider() {
+    Slider::Ptr slider(new Slider());
+    slider->elementTypeName = elementname;
+    slider->numPointsThresh = numPointsThresh;
+    slider->maxDistance = maxDistance;
+    return slider;
+}
+

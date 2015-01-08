@@ -17,33 +17,21 @@
    * along with CraftUI. If not, see <http://www.gnu.org/licenses/>. */
 
 
-#ifndef __SLIDER_TYPE_H__
-#define __SLIDER_TYPE_H__
+#ifndef __SLIDER_H__
+#define __SLIDER_H__
 
-#include "elementtype.h"
-#include "slider.h"
+#include "element.h"
 
-
-class SliderType : public ElementType {
+class Slider : public Element {
 
     public:
 
-        SliderType() {
-            ElementType::elementname = "slider";
-        }
+        typedef typename std::shared_ptr<Slider> Ptr;
 
-        virtual void loadFromFileStorage(const cv::FileNode& node) override;
+        virtual void loadFromFileStorage(const cv::FileNode&) override;
         virtual void saveToFileStorage(cv::FileStorage&) override;
 
-        virtual Element::Ptr createDefaultElement() override;
-        virtual Slider::Ptr createDefaultSlider();
-        
     protected:
-
-        // minimum number of inside the volume to register a press
-        int numPointsThresh = 30;
-        // maximum distance in meters from the element to press the button
-        int maxDistance = 0.02;
 
 };
 

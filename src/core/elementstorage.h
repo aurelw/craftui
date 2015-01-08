@@ -37,7 +37,6 @@ class ElementStorage {
         void addElement(Element::Ptr element);
         std::vector<Element::Ptr> getElements();
 
-
         /* element types */
         ButtonType buttonType;
         SliderType sliderType;

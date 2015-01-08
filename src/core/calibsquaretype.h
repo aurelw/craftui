@@ -33,6 +33,10 @@ class CalibSquareType : public ElementType {
 
         virtual void loadFromFileStorage(const cv::FileNode& node) override;
         virtual void saveToFileStorage(cv::FileStorage&) override;
+
+        /* this will return NULL because there is no UI element
+         * for the calibration rectangle */
+        virtual Element::Ptr createDefaultElement() override;
         
     protected:
 

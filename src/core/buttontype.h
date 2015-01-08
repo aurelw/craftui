@@ -21,6 +21,7 @@
 #define __BUTTON_TYPE_H__
 
 #include "elementtype.h"
+#include "button.h"
 
 
 class ButtonType : public ElementType {
@@ -33,6 +34,9 @@ class ButtonType : public ElementType {
 
         virtual void loadFromFileStorage(const cv::FileNode& node) override;
         virtual void saveToFileStorage(cv::FileStorage&) override;
+
+        virtual Element::Ptr createDefaultElement() override;
+        virtual Button::Ptr createDefaultButton();
         
 
     protected:
@@ -40,7 +44,7 @@ class ButtonType : public ElementType {
         // minimum number of inside the volume to register a press
         int numPointsThresh = 60;
         // maximum distance in meters from the element to press the button
-        int maxDistance = 0.03;
+        float maxDistance = 0.03;
 
 };
 

@@ -27,14 +27,19 @@
 #include <iostream>
 #include <string>
 
+#include "element.h"
+
 
 class ElementType {
 
     public:
 
-        virtual float checkHistogram();
         virtual void loadFromFileStorage(const cv::FileNode&) = 0;
         virtual void saveToFileStorage(cv::FileStorage&) = 0;
+
+        virtual Element::Ptr createDefaultElement() = 0;
+
+        virtual float checkHistogram();
 
         std::string elementname = "element";
 

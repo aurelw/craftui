@@ -33,3 +33,8 @@ void CalibSquareType::saveToFileStorage(cv::FileStorage& fs) {
     fs << "}";
 }
 
+
+Element::Ptr CalibSquareType::createDefaultElement() {
+    return NULL;
+}
+

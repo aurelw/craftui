@@ -34,3 +34,18 @@ void ButtonType::saveToFileStorage(cv::FileStorage& fs) {
     fs << "}";
 }
 
+
+Element::Ptr ButtonType::createDefaultElement() {
+    Button::Ptr button = createDefaultButton();
+    Element::Ptr element(button);
+    return element;
+}
+
+Button::Ptr ButtonType::createDefaultButton() {
+    Button::Ptr button(new Button());
+    button->elementTypeName = elementname;
+    button->numPointsThresh = numPointsThresh;
+    button->maxDistance = maxDistance;
+    return button;
+}
+    
