@@ -21,15 +21,15 @@
 
 void CalibSquareType::loadFromFileStorage(const cv::FileNode& node) {
     ElementType::loadFromFileStorage(node);
+    node["length"] >> length;
     node["width"] >> width;
-    node["height"] >> height;
 }
 
 void CalibSquareType::saveToFileStorage(cv::FileStorage& fs) {
     fs << elementname << "{";
     ElementType::saveToFileStorage(fs);
+    fs << "length" << length;
     fs << "width" << width;
-    fs << "height" << height;
     fs << "}";
 }
 

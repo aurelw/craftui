@@ -1,7 +1,7 @@
 /*
-   * (C) 2013, Aurel Wildfellner
+   * (C) 2015, Aurel Wildfellner
    *
-   * This file is part of Beholder.
+   * This file is part of CraftUI.
    *
    * Beholder is free software: you can redistribute it and/or modify
    * it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
    * GNU General Public License for more details.
    *
    * You should have received a copy of the GNU General Public License
-   * along with Beholder. If not, see <http://www.gnu.org/licenses/>. */
+   * along with CraftUI. If not, see <http://www.gnu.org/licenses/>. */
 
 #include <iostream>
 #include <cmath>
@@ -38,8 +38,11 @@
 #include <pcl/filters/statistical_outlier_removal.h>
 #include <pcl/filters/extract_indices.h>
 
-//#define DEBUG_MARKER
 
+#ifndef __PLANE_MARKER_H__
+#define __PLANE_MARKER_H__
+
+//#define DEBUG_MARKER
 #ifdef DEBUG_MARKER
     #define DEBUG(s) printf("[PlaneMarker] "); printf(s); printf("\n")
     #define DEBUG_P(s,p) printf("[PlaneMarker] " ); printf(s,p); printf("\n")
@@ -60,7 +63,9 @@ class PlaneMarker {
 
     public:
 
-        PlaneMarker (float length, float width, float sigma);
+        PlaneMarker (float length=0.4, float width=0.2, float sigma=0.03);
+
+        void setMarkerDimensions(float length, float width, float sigma=0.03);
 
         bool computeMarkerCenter(PointCloudConstPtr cloud, PointT& center);
 
@@ -104,6 +109,19 @@ template <typename PointT> PlaneMarker<PointT>::PlaneMarker
     pointA(),
     pointB()
 {
+    setMarkerDimensions(length, width, sigma);
+
+    /* search properties */
+    minClusterSize = 2000;
+    clusterTolerance = 0.05; //5cm
+    maxSACIterations = 1000;
+    sacDistanceThresh = 0.06;
+}
+
+
+template <typename PointT> void PlaneMarker<PointT>::setMarkerDimensions(
+        float length, float width, float sigma)
+{
     /* length should be greater then width */
     if (width > length) {
         marker_length = width;
@@ -116,12 +134,6 @@ template <typename PointT> PlaneMarker<PointT>::PlaneMarker
 
     /* the valid delta for the found diagonal */
     marker_sigma = sigma;
-
-    /* search properties */
-    minClusterSize = 2000;
-    clusterTolerance = 0.05; //5cm
-    maxSACIterations = 1000;
-    sacDistanceThresh = 0.06;
 }
 
 
@@ -213,6 +225,7 @@ template <typename PointT> bool PlaneMarker<PointT>::computeMarkerCenter(
             /* the marker center*/
             centerFromBothDiagonals();
             center = centerPoint;
+            markerCloud = planeCloud;
             return true;
         }
     }
@@ -369,4 +382,7 @@ template <typename PointT> void PlaneMarker<PointT>::centerFromBothDiagonals() {
     centerBetweenPoints(pointC, pointD, p1);
     centerBetweenPoints(p0, p1, centerPoint);
 }
+
+
+#endif
 

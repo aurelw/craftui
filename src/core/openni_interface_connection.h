@@ -1,5 +1,5 @@
 /*
-   * (C) 2013, Aurel Wildfellner
+   * (C) 2015, Aurel Wildfellner
    *
    * This file is part of Beholder.
    *

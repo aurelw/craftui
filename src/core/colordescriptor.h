@@ -17,32 +17,42 @@
    * along with CraftUI. If not, see <http://www.gnu.org/licenses/>. */
 
 
-#ifndef __CALIBSQUARE_TYPE_H__
-#define __CALIBSQUARE_TYPE_H__
-
-#include "elementtype.h"
+#ifndef __COLOR_DESCRIPTOR_H__
+#define __COLOR_DESCRIPTOR_H__
 
 
-class CalibSquareType : public ElementType {
+#include <pcl/common/common_headers.h>
+
+#include <opencv2/core/core.hpp>
+#include <iostream>
+#include <string>
+
+#include "element.h"
+
+
+class ColorDescriptor {
 
     public:
 
-        CalibSquareType() {
-            ElementType::elementname = "calibsquare";
-        }
+        typedef typename pcl::PointXYZRGBA PointT;
+        typedef typename pcl::PointCloud<PointT> Cloud;
 
-        virtual void loadFromFileStorage(const cv::FileNode& node) override;
-        virtual void saveToFileStorage(cv::FileStorage&) override;
+    public:
 
-        /* this will return NULL because there is no UI element
-         * for the calibration rectangle */
-        virtual Element::Ptr createDefaultElement() override;
-        
-        // A sheet of A4 paper
-        float length = 0.297;
-        float width = 0.210;
+        static void pointToHSV(const PointT& p,
+                float& h, float& s, float& v);
+
+    public:
+
+        void compute(const Cloud::ConstPtr& cloud);
+
+        float getPrimaryHue();
+        float getPrimarySat();
 
     protected:
+
+        float primaryHue = 0.0;
+        float primarySat = 0.0;
 
 };
 

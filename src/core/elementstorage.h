@@ -20,6 +20,8 @@
 #ifndef __ELEMENT_STORAGE_H__
 #define __ELEMENT_STORAGE_H__
 
+#include <memory>
+
 #include "buttontype.h"
 #include "calibsquaretype.h"
 #include "slidertype.h"
@@ -29,6 +31,8 @@
 class ElementStorage {
 
     public:
+
+        typedef typename std::shared_ptr<ElementStorage> Ptr;
 
         bool loadFromFile(const std::string& path);
         bool saveToFile(const std::string& path);

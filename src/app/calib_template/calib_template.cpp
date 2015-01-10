@@ -22,6 +22,8 @@
 
 #include "elementstorage.h"
 #include "plane_marker.h"
+#include "templateapp.h"
+#include "openni_interface.h"
 
 
 void print_usage() {
@@ -38,21 +40,28 @@ int main(int argc, char **argv) {
         exit(0);
     }
     
+    /* setup element storage */
     std::string filepath;
     if (pcl::console::parse_argument(argc, argv, "-c", filepath) == -1) {
         std::cerr << "[ERROR] No config file provided!" << std::endl;
         exit(1); 
     }
 
-    ElementStorage eStore;
-    bool success = eStore.loadFromFile(filepath);
+    ElementStorage::Ptr eStore(new ElementStorage());
+    bool success = eStore->loadFromFile(filepath);
     if (!success) {
         std::cerr << "[ERROR] Couldn't write to file!" << std::endl;
         exit(1);
     }
 
-    PlaneMarker<pcl::PointXYZRGB>* planemarker 
-        = new PlaneMarker<pcl::PointXYZRGB>(1,2,3);
+    /* setup the kinect interface */
+    OpenNiInterface::Ptr openNiIf(new OpenNiInterface("0"));
+    openNiIf->init();
+    openNiIf->waitForFirstFrame();
+
+    /* create the app and run it */
+    TemplateApp app(openNiIf, eStore);
+    app.run();
 
     exit(0);
 }

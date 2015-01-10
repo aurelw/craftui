@@ -18,6 +18,9 @@
 
 #include <iostream>
 
+#include "colordescriptor.h"
+
+
 int main(int argc, char **argv) {
 
 #ifdef linux
@@ -27,6 +30,19 @@ int main(int argc, char **argv) {
 #if linux
     std::cout << "linux == true" << std::endl;
 #endif
+
+    pcl::PointXYZRGBA p;
+    p.r = 155;
+    p.g = 15;
+    p.b = 12;
+    
+    std::cout << "RGB: " << p.r << ", " << p.g << ", " << p.b << std::endl ;
+    std::cout << "Point: " << p << std::endl ;
+
+    float h, s, v;
+    ColorDescriptor::pointToHSV(p, h, s, v);
+
+    std::cout << "HSV: " << h << ", " << s << ", " << v << std::endl;
 
 }
 
