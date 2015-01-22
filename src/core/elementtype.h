@@ -39,7 +39,9 @@ class ElementType {
 
         virtual Element::Ptr createDefaultElement() = 0;
 
-        virtual float checkHistogram();
+        /* the primary Hue for this element type */
+        void setPrimaryHue(const float hue);
+        float getPrimaryHue() const;
 
         std::string elementname = "element";
 

@@ -63,6 +63,10 @@ int main(int argc, char **argv) {
     TemplateApp app(openNiIf, eStore);
     app.run();
 
+    /* save calibration results to element storage */
+    eStore->saveToFile(filepath);
+    std::cout << "Saved to file." << std::endl;
+
     exit(0);
 }
 

@@ -37,6 +37,29 @@ void ColorDescriptor::pointToHSV(const PointT& p,
 }
 
 
+float ColorDescriptor::hueDistance(const float hue0, const float hue1) {
+
+    float distance;
+    if (hue0 < hue1) {
+        distance = hue1 - hue0;
+    } else {
+        distance = hue0 - hue1;
+    }
+
+    if (distance > 180.0) {
+        return distance - 180.0;
+    } else {
+        return distance;
+    }
+        
+}
+
+
+void ColorDescriptor::setMinimumSat(const float sat) {
+    minimumSat = sat;
+}
+
+
 void ColorDescriptor::compute(const Cloud::ConstPtr& cloud) {
 
     /* two histograms */
@@ -49,11 +72,13 @@ void ColorDescriptor::compute(const Cloud::ConstPtr& cloud) {
         float h, s, v;
         pointToHSV(*it, h, s, v);
 
-        int hBin = std::round((h / 360) * (hueBins-1));
-        int sBin = std::round(s * (satBins-1));
-        std::cout << "hBin: " << hBin << " sBin: " << sBin << std::endl;
-        hueHist[hBin] += 1;
-        satHist[sBin] += 1;
+        if (s > minimumSat) {
+            int hBin = std::round((h / 360) * (hueBins-1));
+            int sBin = std::round(s * (satBins-1));
+            std::cout << "hBin: " << hBin << " sBin: " << sBin << std::endl;
+            hueHist[hBin] += 1;
+            satHist[sBin] += 1;
+        }
     }
 
     /* get the peak in the histogram and the according value for the bin */
@@ -65,12 +90,12 @@ void ColorDescriptor::compute(const Cloud::ConstPtr& cloud) {
 }
 
 
-float ColorDescriptor::getPrimaryHue() {
+float ColorDescriptor::getPrimaryHue() const {
     return primaryHue;
 }
 
 
-float ColorDescriptor::getPrimarySat() {
+float ColorDescriptor::getPrimarySat() const {
     return primarySat;
 }
 

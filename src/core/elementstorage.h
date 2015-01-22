@@ -22,6 +22,7 @@
 
 #include <memory>
 
+#include "elementtype.h"
 #include "buttontype.h"
 #include "calibsquaretype.h"
 #include "slidertype.h"
@@ -34,12 +35,15 @@ class ElementStorage {
 
         typedef typename std::shared_ptr<ElementStorage> Ptr;
 
+        ElementStorage();
+
         bool loadFromFile(const std::string& path);
         bool saveToFile(const std::string& path);
 
         /* access to all UI elements */
         void addElement(Element::Ptr element);
-        std::vector<Element::Ptr> getElements();
+        std::vector<Element::Ptr> getElements() const;
+        std::vector<ElementType*> getElementTypes() const;
 
         /* element types */
         ButtonType buttonType;
@@ -57,6 +61,7 @@ class ElementStorage {
         void saveElements(cv::FileStorage&);
 
         std::vector<Element::Ptr> elements;
+        std::vector<ElementType*> elementTypes;
 
 };
 

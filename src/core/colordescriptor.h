@@ -41,16 +41,21 @@ class ColorDescriptor {
 
         static void pointToHSV(const PointT& p,
                 float& h, float& s, float& v);
+        static float hueDistance(const float hue0, const float hue1);
 
     public:
 
+        void setMinimumSat(const float sat);
         void compute(const Cloud::ConstPtr& cloud);
 
-        float getPrimaryHue();
-        float getPrimarySat();
+        /* returns the most frequent Hue value in the cloud */
+        float getPrimaryHue() const;
+        /* retzrns the most frequent Saturation value in the cloud */
+        float getPrimarySat() const;
 
     protected:
 
+        float minimumSat = 0.0;
         float primaryHue = 0.0;
         float primarySat = 0.0;
 

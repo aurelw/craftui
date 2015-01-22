@@ -21,6 +21,13 @@
 #include "elementstorage.h"
 
 
+ElementStorage::ElementStorage() {
+    elementTypes.push_back(&buttonType);
+    elementTypes.push_back(&sliderType);
+    elementTypes.push_back(&calibSquareType);
+}
+
+
 bool ElementStorage::loadFromFile(const std::string& path) {
 
     /* clear old storage */
@@ -122,7 +129,12 @@ void ElementStorage::addElement(Element::Ptr element) {
 }
 
 
-std::vector<Element::Ptr> ElementStorage::getElements() {
+std::vector<Element::Ptr> ElementStorage::getElements() const {
     return elements;
+}
+
+
+std::vector<ElementType*> ElementStorage::getElementTypes() const {
+    return elementTypes;
 }
 

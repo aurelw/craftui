@@ -19,11 +19,6 @@
 #include "elementtype.h"
 
 
-float ElementType::checkHistogram() {
-
-}
-
-
 void ElementType::loadFromFileStorage(const cv::FileNode& node) {
     node["primaryHue"] >> primaryHue;
 }
@@ -31,5 +26,15 @@ void ElementType::loadFromFileStorage(const cv::FileNode& node) {
 
 void ElementType::saveToFileStorage(cv::FileStorage& fs) {
     fs << "primaryHue" << primaryHue;
+}
+
+
+void ElementType::setPrimaryHue(const float hue) {
+    primaryHue = hue;
+}
+
+
+float ElementType::getPrimaryHue() const {
+    return primaryHue;
 }
 

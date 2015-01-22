@@ -27,6 +27,8 @@
 #include "openni_interface_connection.h"
 #include "elementstorage.h"
 #include "plane_marker.h"
+#include "colordescriptor.h"
+#include "elementtype.h"
 
 
 class TemplateApp : public OpenNiInterfaceConnection {
@@ -57,14 +59,18 @@ class TemplateApp : public OpenNiInterfaceConnection {
 
     private:
 
-        ElementStorage::Ptr elementStorage;
-        PlaneMarker<pcl::PointXYZRGBA> planeMarker;
-
         pcl::visualization::CloudViewer viewer;
         pcl::PointXYZRGBA markerPoint;
         /* flags for keyboard commands */
         bool doCaptureMarker = false;
         bool doQuit = false;
+
+        ElementStorage::Ptr elementStorage;
+        PlaneMarker<pcl::PointXYZRGBA> planeMarker;
+
+        /* prints a menu to select an element type,
+         * returns: true if valid selection */
+        bool elementMenu(const ColorDescriptor& cd);
 
 };
 
