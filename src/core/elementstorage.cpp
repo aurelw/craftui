@@ -124,7 +124,7 @@ void ElementStorage::saveElements(cv::FileStorage& fs) {
 }
 
 
-void ElementStorage::addElement(Element::Ptr element) {
+void ElementStorage::addElement(const Element::Ptr& element) {
     elements.push_back(element);
 }
 

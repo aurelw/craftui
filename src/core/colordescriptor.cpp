@@ -75,7 +75,6 @@ void ColorDescriptor::compute(const Cloud::ConstPtr& cloud) {
         if (s > minimumSat) {
             int hBin = std::round((h / 360) * (hueBins-1));
             int sBin = std::round(s * (satBins-1));
-            std::cout << "hBin: " << hBin << " sBin: " << sBin << std::endl;
             hueHist[hBin] += 1;
             satHist[sBin] += 1;
         }

@@ -23,7 +23,7 @@
 void TemplateApp::run() {
 
     bool foundMarker = false;
-    while (!foundMarker) {
+    while (!foundMarker && !viewer.wasStopped() && !doQuit) {
         updateCloud(); 
         viewer.showCloud(cloud);
 

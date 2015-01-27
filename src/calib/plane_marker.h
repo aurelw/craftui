@@ -76,6 +76,7 @@ class PlaneMarker {
 
         /* the cloud of the marker */
         PointCloudConstPtr markerCloud;
+        pcl::ModelCoefficients::Ptr markerCoefficients;
        
     private:
 
@@ -113,7 +114,7 @@ template <typename PointT> PlaneMarker<PointT>::PlaneMarker
 
     /* search properties */
     minClusterSize = 2000;
-    clusterTolerance = 0.05; //5cm
+    clusterTolerance = 0.02; //2cm
     maxSACIterations = 1000;
     sacDistanceThresh = 0.06;
 }
@@ -226,6 +227,7 @@ template <typename PointT> bool PlaneMarker<PointT>::computeMarkerCenter(
             centerFromBothDiagonals();
             center = centerPoint;
             markerCloud = planeCloud;
+            markerCoefficients = coefficients;
             return true;
         }
     }

@@ -41,7 +41,7 @@ class ElementStorage {
         bool saveToFile(const std::string& path);
 
         /* access to all UI elements */
-        void addElement(Element::Ptr element);
+        void addElement(const Element::Ptr& element);
         std::vector<Element::Ptr> getElements() const;
         std::vector<ElementType*> getElementTypes() const;
 
