@@ -29,6 +29,7 @@ void CalibUIApp::run() {
 
     Cloud::Ptr capturedCloud;
     Cloud::Ptr planeCloud(new Cloud); 
+    Cloud::Ptr emptyCloud(new Cloud); 
     bool foundMarker = false;
     
     while (!foundMarker && !doQuit && !viewer.wasStopped()) {
@@ -68,19 +69,55 @@ void CalibUIApp::run() {
         /* show the cloud */
         viewer.showCloud(planeCloud);
 
+        //TODO remove the marker cloud
         /* extract and define the UI elements from the plane */
         extractElements(planeCloud);
         
     }
 
+    /* clear the main cloud */
+    viewer.showCloud(emptyCloud);
+
+    /* display the convex hulls */
+    int idx = 0;
+    auto elements = elementStorage->getElements();
+    for (auto element : elementStorage->getElements()) {
+        viewer.showCloud(element->hullCloud, std::to_string(idx++));
+    }
+
+
     while (!doQuit && !viewer.wasStopped()) {
-        sleep(0.2);
+        updateCloud(); 
+
+//        std::cout << "Collide Points:" << std::endl;
+        /* do collision tests */
+        pcl::PointIndices::Ptr ecIndices;
+        for (auto element : elementStorage->getElements()) {
+            element->resetCollision();
+            pcl::PointIndices::Ptr tmpIndices = element->collideCloud(cloud);
+            if (tmpIndices->indices.size() > 50) {
+                ecIndices = tmpIndices;
+            }
+//            std::cout << "Element Collisions: " << element->getNumCollisions()
+//                      << std::endl;
+        }
+        /* extract the indices */
+        if (ecIndices != NULL) {
+            pcl::ExtractIndices<pcl::PointXYZRGBA> extract;
+            extract.setInputCloud(cloud);
+            extract.setIndices(ecIndices);
+            extract.filter(*planeCloud);
+        }
+
+        viewer.showCloud(planeCloud);
+
+
     }
 
 }
 
 
-void CalibUIApp::extractElements(const Cloud::Ptr& planeCloud) {
+void CalibUIApp::extractElements(const Cloud::ConstPtr& planeCloud) {
 
     /* segment the cloud into euclidiean clusters */
     std::vector<pcl::PointIndices> clusters_indices;
@@ -99,6 +136,7 @@ void CalibUIApp::extractElements(const Cloud::Ptr& planeCloud) {
     /* for each cluster, check if it is an element */
     for (auto cluster_is : clusters_indices) {
 
+        std::cout << "[Extract Elements] Process cluster" << std::endl;
         // this is stupid, euclidean clusters won't give shared pointers,
         // but ExtractIndices needs one.
         boost::shared_ptr<pcl::PointIndices> ciptr(new pcl::PointIndices(cluster_is));
@@ -114,6 +152,9 @@ void CalibUIApp::extractElements(const Cloud::Ptr& planeCloud) {
         ColorDescriptor cdesc;
         cdesc.compute(elementCloud);
 
+        std::cout << "[Extract Elements] Clouster Hue: " <<
+            cdesc.getPrimaryHue() << std::endl;
+
         /* find a matching ElementType */
         for (ElementType* etype : elementStorage->getElementTypes()) {
 
@@ -121,13 +162,20 @@ void CalibUIApp::extractElements(const Cloud::Ptr& planeCloud) {
             float hueDistance = ColorDescriptor::hueDistance(
                 etype->getPrimaryHue(), cdesc.getPrimaryHue());  
 
+            std::cout << "[Extract Elements] Hue Distance to " <<
+                etype->elementname << ": " << hueDistance << std::endl;
+
             /* create the element */
             if (hueDistance < maxHueDistance) {
                 Element::Ptr element = etype->createDefaultElement();
                 if (element != NULL) {
+                    element->defineFromCloud(elementCloud);
                     elementStorage->addElement(element);
                 }
             } 
+
+            //TODO check if the normals of the calib plane and the element
+            // align to some extent.
         }
 
     }

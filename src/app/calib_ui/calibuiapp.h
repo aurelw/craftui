@@ -70,15 +70,16 @@ class CalibUIApp : public OpenNiInterfaceConnection {
         ElementStorage::Ptr elementStorage;
         PlaneMarker<pcl::PointXYZRGBA> planeMarker;
 
-        void extractElements(const Cloud::Ptr& planeCloud);
+        void extractElements(const Cloud::ConstPtr& planeCloud);
 
         /* some calibration parameters */
         // the maximum distance between two elements
         float distanceTollerance = 0.015;
         // the maximum difference in hue to match an ElementType
-        float maxHueDistance = 2;
-        // the tolerance for points on the UI plane defined by the calib pattern
-        float uiPlaneTollerance = 0.02;
+        float maxHueDistance = 10;
+        // the tolerance for the distance of points from the UI plane 
+        // defined by the calib pattern
+        float uiPlaneTollerance = 0.04;
         // cluster constraints for a UI element marker
         float minElementClusterSize = 100;
 };

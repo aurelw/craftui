@@ -24,7 +24,7 @@ void Slider::loadFromFileStorage(const cv::FileNode& node) {
 }
 
 
-void Slider::saveToFileStorage(cv::FileStorage& fs) {
+void Slider::saveToFileStorage(cv::FileStorage& fs) const {
     Element::saveToFileStorage(fs);
 }
 

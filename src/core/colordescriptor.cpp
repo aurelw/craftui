@@ -47,7 +47,7 @@ float ColorDescriptor::hueDistance(const float hue0, const float hue1) {
     }
 
     if (distance > 180.0) {
-        return distance - 180.0;
+        return 360 - distance;
     } else {
         return distance;
     }

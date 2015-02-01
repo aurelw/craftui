@@ -24,7 +24,7 @@ void Button::loadFromFileStorage(const cv::FileNode& node) {
 }
 
 
-void Button::saveToFileStorage(cv::FileStorage& fs) {
+void Button::saveToFileStorage(cv::FileStorage& fs) const {
     Element::saveToFileStorage(fs);
 }
 

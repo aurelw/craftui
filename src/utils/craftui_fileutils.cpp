@@ -17,24 +17,6 @@
    * along with CraftUI. If not, see <http://www.gnu.org/licenses/>. */
 
 
-#ifndef __BUTTON_H__
-#define __BUTTON_H__
+#include "craftui_fileutils.h"
 
-#include "element.h"
-
-class Button : public Element {
-
-    public:
-
-        typedef typename std::shared_ptr<Button> Ptr;
-
-        virtual void loadFromFileStorage(const cv::FileNode&) override;
-        virtual void saveToFileStorage(cv::FileStorage&) const override;
-
-    protected:
-
-};
-
-
-#endif
 

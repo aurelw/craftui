@@ -22,9 +22,11 @@
 void OpenNiInterfaceConnection::updateSlot() {
     OpenNiInterface::Cloud::Ptr newcloud = openNiIf->getCloudCopy();
     {
-        boost::unique_lock<boost::mutex> lock(back_cloud_mutex);
-        back_cloud = newcloud;
-        back_cloud_updated = true;
+        {
+            boost::unique_lock<boost::mutex> lock(back_cloud_mutex);
+            back_cloud = newcloud;
+            back_cloud_updated = true;
+        }
         updatedCondition.notify_all();
     }
 }

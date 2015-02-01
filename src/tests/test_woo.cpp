@@ -21,6 +21,7 @@
 #include "colordescriptor.h"
 
 
+
 int main(int argc, char **argv) {
 
 #ifdef linux
@@ -31,18 +32,15 @@ int main(int argc, char **argv) {
     std::cout << "linux == true" << std::endl;
 #endif
 
-    pcl::PointXYZRGBA p;
-    p.r = 155;
-    p.g = 15;
-    p.b = 12;
-    
-    std::cout << "RGB: " << p.r << ", " << p.g << ", " << p.b << std::endl ;
-    std::cout << "Point: " << p << std::endl ;
+    int hue0, hue1;
+    std::cout << "Hue0: ";
+    std::cin >> hue0;
+    std::cout << "Hue1: ";
+    std::cin >> hue1;
 
-    float h, s, v;
-    ColorDescriptor::pointToHSV(p, h, s, v);
+    std::cout << "Hue Distance: " << ColorDescriptor::hueDistance(hue0, hue1);
+    std::cout << std::endl;
 
-    std::cout << "HSV: " << h << ", " << s << ", " << v << std::endl;
 
 }
 

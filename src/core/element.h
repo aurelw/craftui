@@ -25,6 +25,8 @@
 #include <memory>
 
 #include <pcl/common/common_headers.h>
+#include <pcl/filters/crop_hull.h>
+
 #include <opencv2/core/core.hpp>
 
 
@@ -34,20 +36,51 @@ class Element {
 
         typedef typename std::shared_ptr<Element> Ptr;
 
+        typedef typename pcl::PointXYZRGBA PointT;
+        typedef typename pcl::PointCloud<PointT> Cloud;
+
+        /* file storage */
         virtual void loadFromFileStorage(const cv::FileNode&);
-        virtual void saveToFileStorage(cv::FileStorage&);
+        virtual void saveToFileStorage(cv::FileStorage&) const;
 
         /* naming */
         std::string elementTypeName = "element";
         std::string id = "unnamed";
 
-        /* orientation */
-
-        /* collison */
+        /* collison parameters */
         int numPointsThresh;
+        int dynamicThresh = 0;
         float maxDistance;
 
+        /*** collision interface ***/
+        /* collide a single point with the ui element */
+        virtual bool collidePoint(const pcl::PointXYZRGBA& p);
+        /* collide an cloud, returns trigger status */
+        virtual pcl::PointIndices::Ptr collideCloud(const Cloud::ConstPtr cloud);
+        /* the number of collisions have reached a threshhold */
+        virtual bool isTriggered() const;
+        /* returns the number of collided points since last reset */
+        virtual int getNumCollisions() const;
+        /* reset all collisions */
+        virtual void resetCollision();
+
+        /* calibration */
+        virtual void defineFromCloud(const Cloud::Ptr& cloud);
+
+        /* orientation and geometry */
+        Cloud::Ptr hullCloud; 
+        Eigen::Vector4f plane;
+
     protected:
+
+        void computeHull(const Cloud::ConstPtr& cloud);
+        /* needs to be called after a new hull is computet or loaded from a file */
+        void setupHullFilter();
+        pcl::CropHull<PointT> cropHull;
+
+        int numCollisions = 0;
+
+        pcl::ModelCoefficients::Ptr planeCoefficients;
 
 };
 
