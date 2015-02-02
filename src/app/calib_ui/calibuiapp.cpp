@@ -74,6 +74,7 @@ void CalibUIApp::run() {
         extractElements(planeCloud);
         
     }
+    std::cout << "Elements extracted" << std::endl;
 
     /* clear the main cloud */
     viewer.showCloud(emptyCloud);
