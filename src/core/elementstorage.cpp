@@ -62,8 +62,17 @@ void ElementStorage::loadElements(const cv::FileStorage& fs) {
     cv::FileNodeIterator it = elements_node.begin(), it_end = elements_node.end();
 
     for (; it != it_end; it++) {
+
+        /* create the concrete element based on the typename */
         std::string tname = (*it)["typename"];
-        Element::Ptr element(new Element());
+        Element::Ptr element;
+        for (auto etype : elementTypes) {
+            if (etype->elementname == tname) {
+                element = etype->createDefaultElement();
+                break;
+            }
+        }
+
         element->loadFromFileStorage(*it);
         elements.push_back(element);
     }

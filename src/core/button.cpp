@@ -19,6 +19,12 @@
 
 #include "button.h"
 
+
+void Button::accept(ElementVisitor& visitor) {
+    visitor.visit(*this);
+}
+
+
 void Button::loadFromFileStorage(const cv::FileNode& node) {
     Element::loadFromFileStorage(node);
 }

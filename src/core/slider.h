@@ -28,6 +28,8 @@ class Slider : public Element {
 
         typedef typename std::shared_ptr<Slider> Ptr;
 
+        virtual void accept(ElementVisitor& visitor) override;
+
         virtual void loadFromFileStorage(const cv::FileNode&) override;
         virtual void saveToFileStorage(cv::FileStorage&) const override;
 

@@ -29,6 +29,8 @@
 
 #include <opencv2/core/core.hpp>
 
+#include "elementvisitor.h"
+
 
 class Element {
 
@@ -38,6 +40,9 @@ class Element {
 
         typedef typename pcl::PointXYZRGBA PointT;
         typedef typename pcl::PointCloud<PointT> Cloud;
+
+        /* visitor */
+        virtual void accept(ElementVisitor& visitor) = 0;
 
         /* file storage */
         virtual void loadFromFileStorage(const cv::FileNode&);

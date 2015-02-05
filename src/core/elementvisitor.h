@@ -17,23 +17,17 @@
    * along with CraftUI. If not, see <http://www.gnu.org/licenses/>. */
 
 
-#ifndef __BUTTON_H__
-#define __BUTTON_H__
+#ifndef __ELEMENT_VISITOR_H__
+#define __ELEMENT_VISITOR_H__
 
 #include "element.h"
 
-class Button : public Element {
+class ElementVisitor {
 
     public:
 
-        typedef typename std::shared_ptr<Button> Ptr;
-
-        virtual void accept(ElementVisitor& visitor) override;
-
-        virtual void loadFromFileStorage(const cv::FileNode&) override;
-        virtual void saveToFileStorage(cv::FileStorage&) const override;
-
-    protected:
+        virtual void visit(class Button&) = 0;
+        virtual void visit(class Slider&) = 0;
 
 };
 

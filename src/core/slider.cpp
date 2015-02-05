@@ -19,6 +19,11 @@
 
 #include "slider.h"
 
+void Slider::accept(ElementVisitor& visitor) {
+    visitor.visit(*this);
+}
+
+
 void Slider::loadFromFileStorage(const cv::FileNode& node) {
     Element::loadFromFileStorage(node);
 }
