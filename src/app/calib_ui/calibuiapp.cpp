@@ -52,6 +52,13 @@ void CalibUIApp::run() {
     /* the marker is found, handle the plane */
     if (foundMarker) {
 
+        /* remove the points belonging to the marker */
+        pcl::ExtractIndices<pcl::PointXYZRGBA> extractmarker;
+        extractmarker.setInputCloud(capturedCloud);
+        extractmarker.setIndices(planeMarker.markerIndices);
+        extractmarker.setNegative(true);
+        extractmarker.filter(*capturedCloud);
+
         /* get the indicies for all points on the plane */
         pcl::PointIndices::Ptr planeInliers (new pcl::PointIndices ());
         Eigen::Vector4f plane = planeCoefficientsToParameters(

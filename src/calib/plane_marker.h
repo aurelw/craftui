@@ -75,6 +75,7 @@ class PlaneMarker {
         PointT pointR;
 
         /* the cloud of the marker */
+        pcl::PointIndices::Ptr markerIndices;
         PointCloudConstPtr markerCloud;
         pcl::ModelCoefficients::Ptr markerCoefficients;
        
@@ -142,26 +143,7 @@ template <typename PointT> bool PlaneMarker<PointT>::computeMarkerCenter(
         PointCloudConstPtr inCloud, 
         PointT& center) 
 {
-    /* do some preprocessing to the cloud */
-    PointCloudPtr fcloud (new PointCloud);
-
-    /* remove NaNs */
-    std::vector<int> mapping;
-    pcl::removeNaNFromPointCloud(*inCloud, *fcloud, mapping);
-
-/*          
-    pcl::StatisticalOutlierRemoval<PointT> sor;
-    sor.setInputCloud(fcloud);
-    sor.setMeanK(50);
-    sor.setStddevMulThresh(1.0);
-    sor.filter(*fcloud);
-
-    // takes long, messes up results
-    pcl::VoxelGrid<PointT> vg;
-    vg.setInputCloud (fcloud);
-    vg.setLeafSize (0.005f, 0.005f, 0.005f);
-    vg.filter (*fcloud);
-*/
+    PointCloudConstPtr fcloud = inCloud;
 
     /* segment all euclidean clusters in the cloud */
     std::vector<pcl::PointIndices> cluster_indices;
@@ -228,6 +210,7 @@ template <typename PointT> bool PlaneMarker<PointT>::computeMarkerCenter(
             center = centerPoint;
             markerCloud = planeCloud;
             markerCoefficients = coefficients;
+            markerIndices = planeindices;
             return true;
         }
     }
