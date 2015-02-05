@@ -23,11 +23,12 @@
 
 #include "craftui_mathutils.h"
 #include "dynamicthreshcalib.h"
-
+#include "eventgenerator.h"
 
 
 void CraftUIApp::run() {
 
+    EventGenerator eventGen;
     Cloud::Ptr capturedCloud;
 
     /* calibrate the dynamic noise threshhold */
@@ -55,9 +56,7 @@ void CraftUIApp::run() {
 
         /* process events */
         for (auto element : elements) {
-            if (element->isTriggered()) {
-                std::cout << "Triggered: " << element->id << std::endl;
-            }
+            element->accept(eventGen);
         }
 
         if (withViewer) {

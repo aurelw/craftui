@@ -42,7 +42,7 @@ class Element {
         typedef typename pcl::PointCloud<PointT> Cloud;
 
         /* visitor */
-        virtual void accept(ElementVisitor& visitor) = 0;
+        virtual void accept(class ElementVisitor& visitor) = 0;
 
         /* file storage */
         virtual void loadFromFileStorage(const cv::FileNode&);
