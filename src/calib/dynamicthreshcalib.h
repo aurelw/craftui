@@ -41,6 +41,7 @@ class DynamicThreshCalib {
         DynamicThreshCalib(const std::vector<Element::Ptr>& elements);
 
         void calibWithCloud(const Cloud::ConstPtr& cloud);
+        void reset();
 
     private:
 

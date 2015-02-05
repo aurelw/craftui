@@ -38,3 +38,10 @@ void DynamicThreshCalib::calibWithCloud(const Cloud::ConstPtr& cloud) {
 
 }
 
+
+void DynamicThreshCalib::reset() {
+    for (auto element : uiElements) {
+        element->dynamicThresh = 0;
+    }
+}
+
