@@ -4,6 +4,7 @@ add_subdirectory (common)
 add_subdirectory (calib)
 add_subdirectory (tools)
 add_subdirectory (utils)
+add_subdirectory (ipc)
 
 if (BUILD_TESTS)
     add_subdirectory (tests)

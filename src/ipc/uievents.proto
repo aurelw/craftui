@@ -1,0 +1,17 @@
+package craftui;
+
+message Event {
+
+    required string elementtype = 1;
+    required string id = 2;
+
+    enum TriggerStatus {
+        TRIGGERED = 1;
+        UNTRIGGERED = 2;
+        INTRIGGER = 3;
+    };
+
+    optional TriggerStatus trigger = 3;
+
+}
+

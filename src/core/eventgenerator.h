@@ -35,7 +35,7 @@ class EventGenerator : public ElementVisitor {
         virtual void visit(Button& button) override;
         virtual void visit(Slider& slider) override;
 
-    private:
+    protected:
 
         typedef std::chrono::time_point<std::chrono::system_clock> TimePoint; 
         typedef std::chrono::duration<double> TimeDuration;
@@ -50,7 +50,7 @@ class EventGenerator : public ElementVisitor {
         std::map<std::string, bool> inTrigger;
 
         // minim duration between two clicks
-        const float clickRate = 1.0;
+        const float clickRate = 0.2;
 };
 
 
