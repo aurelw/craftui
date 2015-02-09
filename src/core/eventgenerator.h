@@ -27,6 +27,8 @@
 #include "elementvisitor.h"
 #include "button.h"
 #include "slider.h"
+#include "ipcserver.h"
+#include "uievents.pb.h"
 
 class EventGenerator : public ElementVisitor {
 
@@ -34,6 +36,12 @@ class EventGenerator : public ElementVisitor {
 
         virtual void visit(Button& button) override;
         virtual void visit(Slider& slider) override;
+
+        EventGenerator() :
+            ipcServer("tcp://127.0.0.1:9001")
+        {
+            ipcServer.bind();
+        }
 
     protected:
 
@@ -51,6 +59,8 @@ class EventGenerator : public ElementVisitor {
 
         // minim duration between two clicks
         const float clickRate = 0.2;
+
+        IPCServer ipcServer;
 };
 
 
