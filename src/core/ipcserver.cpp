@@ -20,11 +20,12 @@
 #include "ipcserver.h"
 
 
-bool IPCServer::connect() {
+bool IPCServer::bind() {
     try {
-        socket.connect(addr.c_str());
+        publisher.bind(addr.c_str());
     } catch (...) {
         connected = false;
+        return connected;
     }
     connected = true;
     return connected;
@@ -41,6 +42,6 @@ void IPCServer::sendEvent(const EventPtr& event) {
 
     zmq::message_t msg(msgstr.size());
     memcpy ((void *) msg.data (), msgstr.c_str(), msgstr.size());
-    socket.send(msg);
+    publisher.send(msg);
 }
 

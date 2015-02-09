@@ -2,7 +2,12 @@ package craftui;
 
 message Event {
 
-    required string elementtype = 1;
+    enum ElementType {
+        BUTTON = 1;
+        SLIDER = 2;
+    };
+
+    required ElementType elementtype = 1;
     required string id = 2;
 
     enum TriggerStatus {

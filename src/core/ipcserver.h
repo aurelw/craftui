@@ -36,18 +36,18 @@ class IPCServer {
         typedef typename std::shared_ptr<craftui::Event> EventPtr;
 
         IPCServer(const std::string& address) : 
-            context(1), socket(context, ZMQ_PUB), addr(address)
+            context(1), publisher(context, ZMQ_PUB), addr(address)
         {
         }
 
-        bool connect();
+        bool bind();
         void sendEvent(const EventPtr& event);
 
 
     protected:
 
         zmq::context_t context;
-        zmq::socket_t socket;
+        zmq::socket_t publisher;
         bool connected = false;
         std::string addr;
 
