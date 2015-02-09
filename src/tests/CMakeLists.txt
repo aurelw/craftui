@@ -1,4 +1,5 @@
 include_directories (../common/)
+include_directories (../ipc/)
 include_directories (../core/)
 
 set (EXECUTABLE_OUTPUT_PATH "${PROJECT_BINARY_DIR}/bin/tests/")
@@ -17,4 +18,9 @@ target_link_libraries (test_openni_interface core)
 set (test_woo_files test_woo.cpp)
 add_executable (test_woo ${test_woo_files})
 target_link_libraries (test_woo utils core)
+
+### Test IPC
+set (test_ipc_files test_ipc.cpp)
+add_executable (test_ipc ${test_ipc_files})
+target_link_libraries (test_ipc utils core ipc)
 

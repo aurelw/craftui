@@ -21,6 +21,15 @@ include_directories(${Boost_INCLUDE_DIR} )
 # OpenCV
 find_package( OpenCV 2.3 REQUIRED )
 
+# Protobuf
+find_package(Protobuf REQUIRED)
+
+# ZMQ
+set (CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake_modules/)
+find_package(ZeroMQ REQUIRED)
+include_directories(${ZeroMQ_INCLUDE_DIR} )
+
+
 # ImageMagick
 #find_package(ImageMagick COMPONENTS Magick++)
 #include_directories(${ImageMagick_INCLUDE_DIRS} )

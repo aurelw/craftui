@@ -3,6 +3,7 @@ include_directories (../../core/)
 include_directories (../../calib/)
 include_directories (../../gui/)
 include_directories (../../utils/)
+include_directories (../../ipc/)
 
 set (craftui_files craftui.cpp craftuiapp.cpp)
 

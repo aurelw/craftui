@@ -21,17 +21,25 @@
 #include "eventgenerator.h"
 
 
+
 void EventGenerator::visit(Button& button) {
+    std::cout << "Event: " << button.id << std::endl;
     TimePoint now = std::chrono::system_clock::now();
     bool isTriggered = isElementTriggered(button, now);
     bool isUntriggered = isElementUntriggered(button, now);
     updateBounceData(button.id, isTriggered, isUntriggered, now);
 
-    if (isTriggered) {
-        std::cout << "Button down." << std::endl;
-    }
-    if (isUntriggered) {
-        std::cout << "Button up." << std::endl;
+    if (isTriggered || isUntriggered) {
+        std::shared_ptr<craftui::Event> ev(new craftui::Event);
+        ev->set_elementtype(ev->BUTTON);
+        ev->set_id(button.id);
+        if (isTriggered) {
+            ev->set_trigger(ev->TRIGGERED);
+        } else if (isUntriggered) {
+            ev->set_trigger(ev->UNTRIGGERED);
+        }
+
+        ipcServer.sendEvent(ev);
     }
 }
 
@@ -41,6 +49,20 @@ void EventGenerator::visit(Slider& slider) {
     bool isTriggered = isElementTriggered(slider, now);
     bool isUntriggered = isElementUntriggered(slider, now);
     updateBounceData(slider.id, isTriggered, isUntriggered, now);
+
+    if (isTriggered || isUntriggered) {
+        std::shared_ptr<craftui::Event> ev(new craftui::Event);
+        ev->set_elementtype(ev->SLIDER);
+        ev->set_id(slider.id);
+        if (isTriggered) {
+            ev->set_trigger(ev->TRIGGERED);
+        } else if (isUntriggered) {
+            ev->set_trigger(ev->UNTRIGGERED);
+        }
+        //TODO add slider position to event and handle intrigger state
+
+        ipcServer.sendEvent(ev);
+    }
 }
 
 
