@@ -18,9 +18,25 @@
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 #
 
-import zmq
-import uievents_pb2
 import unicodedata
+import re
+import os
+
+import zmq
+
+import uievents_pb2
+
+
+
+class PowerPorts:
+    light = 1
+    fan = 2
+
+
+def toggleChico(port):
+    ports = str(port) 
+    ports = re.escape(ports)
+    os.system('sispmctl -t ' + ports + " > /dev/null")
 
 
 class EventSubscriber:
@@ -61,20 +77,27 @@ def main():
 
     while True:
         event = evs.receiveEvent()
+
+        ### Print Event Info ###
         print "########################"
         print event.id + ":"
-        
         if event.elementtype == event.BUTTON:
             print "  Type: BUTTON" 
         elif event.elementtype == event.SLIDER:
             print "  Type: SLIDER" 
-
         if event.trigger == event.TRIGGERED:
             print "  Triggered!"
         elif event.trigger == event.UNTRIGGERED:
             print "  Untriggered!"
         elif event.trigger == event.INTRIGGER:
             print "  Intrigger."
+
+        ### Do some switching ###
+        if event.id == "light0" and event.trigger == event.TRIGGERED:
+            toggleChico(PowerPorts.light)        
+        if event.id == "fan0" and event.trigger == event.TRIGGERED:
+            toggleChico(PowerPorts.fan)        
+
 
 
 

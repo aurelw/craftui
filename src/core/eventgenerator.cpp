@@ -23,7 +23,6 @@
 
 
 void EventGenerator::visit(Button& button) {
-    std::cout << "Event: " << button.id << std::endl;
     TimePoint now = std::chrono::system_clock::now();
     bool isTriggered = isElementTriggered(button, now);
     bool isUntriggered = isElementUntriggered(button, now);

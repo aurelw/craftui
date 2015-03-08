@@ -18,9 +18,24 @@
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 #
 
-import zmq
-import uievents_pb2
 import unicodedata
+import re
+import os
+
+import zmq
+
+import uievents_pb2
+
+
+
+def setLolStripe(color):
+    os.system("mosquitto_pub -h 192.168.7.2 -t led -m x" + color*60 )
+
+
+def toggleChico(port):
+    ports = str(port) 
+    ports = re.escape(ports)
+    os.system('sispmctl -t ' + ports + " > /dev/null")
 
 
 class EventSubscriber:
@@ -61,20 +76,31 @@ def main():
 
     while True:
         event = evs.receiveEvent()
+
+        ### Print Event Info ###
         print "########################"
         print event.id + ":"
-        
         if event.elementtype == event.BUTTON:
             print "  Type: BUTTON" 
         elif event.elementtype == event.SLIDER:
             print "  Type: SLIDER" 
-
         if event.trigger == event.TRIGGERED:
             print "  Triggered!"
         elif event.trigger == event.UNTRIGGERED:
             print "  Untriggered!"
         elif event.trigger == event.INTRIGGER:
             print "  Intrigger."
+
+        ### Do some switching ###
+        if event.id == "button_red" and event.trigger == event.TRIGGERED:
+            setLolStripe("R")
+        if event.id == "button_green" and event.trigger == event.TRIGGERED:
+            setLolStripe("G")
+        if event.id == "button_blue" and event.trigger == event.TRIGGERED:
+            setLolStripe("B")
+        if event.id == "button_black" and event.trigger == event.TRIGGERED:
+            toggleChico(2)
+
 
 
 
