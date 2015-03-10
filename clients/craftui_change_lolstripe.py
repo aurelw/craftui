@@ -25,6 +25,7 @@ import os
 import zmq
 
 import uievents_pb2
+import craftuiirc
 
 
 
@@ -72,6 +73,9 @@ def main():
     evs = EventSubscriber("tcp://127.0.0.1:9001")
     evs.connect()
     print("Connected: ", evs.connected)
+
+    ircclient = craftuiirc.CraftUIIRC("irc.servus.at", 6667, "#test")
+    ircclient.start()
     
 
     while True:
@@ -98,8 +102,11 @@ def main():
             setLolStripe("G")
         if event.id == "button_blue" and event.trigger == event.TRIGGERED:
             setLolStripe("B")
+            ircclient.postLine("Someone said Hi at the window!")
         if event.id == "button_black" and event.trigger == event.TRIGGERED:
             toggleChico(2)
+
+    ircclient.stop()
 
 
 
