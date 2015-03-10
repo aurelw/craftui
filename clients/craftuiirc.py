@@ -33,26 +33,14 @@ class CraftUIIRC:
     def __init__(self, server, port, channel):
         self._thread = None
         self._lock = Lock()
-        ssl_factory = irc.connection.Factory(wrapper=ssl.wrap_socket)
 
+        self.server = server
+        self.port = port
         self.channel = channel
-        self.reactor = irc.client.Reactor()
-        try:
-            c = self.reactor.server().connect(
-                #server,
-                #port,
-                #nick,
-                server,
-                port,
-                "CraftUI",
-                connect_factory=ssl_factory,
-            )
-        except irc.reactor.ServerConnectionError:
-            print(sys.exc_info()[1])
 
-        c.add_global_handler("welcome", self.on_connect)
-        c.add_global_handler("join", self.on_join)
-        c.add_global_handler("disconnect", self.on_disconnect)
+        self.isJoined = False
+
+        self._connect()
 
         self.postLines = []
 
@@ -80,9 +68,39 @@ class CraftUIIRC:
             self.postLines.append(line)
 
 
+    def _connect(self):
+        print "_connect"
+        c = None
+        ssl_factory = irc.connection.Factory(wrapper=ssl.wrap_socket)
+        self.reactor = irc.client.Reactor()
+
+        try:
+            c = self.reactor.server().connect(
+                self.server,
+                self.port,
+                "CraftUI",
+                connect_factory=ssl_factory,
+            )
+        except irc.reactor.ServerConnectionError:
+            print(sys.exc_info()[1])
+            return
+
+        c.add_global_handler("welcome", self.on_connect)
+        c.add_global_handler("join", self.on_join)
+        c.add_global_handler("disconnect", self.on_disconnect)
+
+        self.connection = c
+
+
     def runThread(self):
         while not self._stopThread:
             self.reactor.process_once()
+
+            while not self.connection.is_connected() and not self._stopThread:
+                self._connect()
+
+            self.handle_messages()
+            time.sleep(1)
 
 
     def on_connect(self, connection, event):
@@ -92,25 +110,39 @@ class CraftUIIRC:
         self.main_loop(connection)
 
     def on_join(self, connection, event):
-        self.main_loop(connection)
+        self.isJoined = True
 
     def on_disconnect(self, connection, event):
-        pass
-
-    def main_loop(self, connection):
-        while not self._stopThread:
-            with self._lock:
-                while self.postLines != []:
-                    connection.privmsg(self.channel, self.postLines.pop(0))
+        self.isJoined = False
+        print "on disconnect"
+        while not self.connection.is_connected():
+            print "   try disconnected..."
+            self._connect()
             time.sleep(1)
+        
+
+    def handle_messages(self):
+
+        print "enter main_loop"
+
+        if not self.connection.is_connected() or not self.isJoined:
+            return
+
+        with self._lock:
+            while self.postLines != []:
+                self.connection.privmsg(self.channel, self.postLines.pop(0))
+
+        print "leave main_loop"
+
 
 
 def main():
 
     client = CraftUIIRC("irc.servus.at", 6667, "#test")
     client.start()
-    time.sleep(15)
-    client.stop()
+    while True:
+        time.sleep(5)
+        client.postLine("ping")
 
 if __name__ == '__main__':
     main()

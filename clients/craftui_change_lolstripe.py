@@ -102,9 +102,9 @@ def main():
             setLolStripe("G")
         if event.id == "button_blue" and event.trigger == event.TRIGGERED:
             setLolStripe("B")
-            ircclient.postLine("Someone said Hi at the window!")
         if event.id == "button_black" and event.trigger == event.TRIGGERED:
-            toggleChico(2)
+            ircclient.postLine("Someone says Hi at the window!")
+            #toggleChico(2)
 
     ircclient.stop()
 
