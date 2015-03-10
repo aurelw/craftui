@@ -77,7 +77,7 @@ class CraftUIIRC:
 
     def postLine(self, line):
         with self._lock:
-            self.postLine.append(line)
+            self.postLines.append(line)
 
 
     def runThread(self):
