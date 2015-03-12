@@ -52,6 +52,11 @@ void CalibUIApp::run() {
     /* the marker is found, handle the plane */
     if (foundMarker) {
 
+        /* learn a ColorDescriptor from the marker */
+        if (learnDescriptor) {
+            defaultDescriptor.compute(planeMarker.markerCloud);
+        }
+
         /* remove the points belonging to the marker */
         pcl::ExtractIndices<pcl::PointXYZRGBA> extractmarker;
         extractmarker.setInputCloud(capturedCloud);
@@ -81,7 +86,6 @@ void CalibUIApp::run() {
         extractElements(planeCloud);
         
     }
-    std::cout << "Elements extracted" << std::endl;
 
     /* clear the main cloud */
     viewer.showCloud(emptyCloud);
@@ -97,7 +101,6 @@ void CalibUIApp::run() {
     while (!doQuit && !viewer.wasStopped()) {
         updateCloud(); 
 
-//        std::cout << "Collide Points:" << std::endl;
         /* do collision tests */
         pcl::PointIndices::Ptr ecIndices;
         for (auto element : elementStorage->getElements()) {
@@ -106,9 +109,8 @@ void CalibUIApp::run() {
             if (tmpIndices->indices.size() > 50) {
                 ecIndices = tmpIndices;
             }
-//            std::cout << "Element Collisions: " << element->getNumCollisions()
-//                      << std::endl;
         }
+
         /* extract the indices */
         if (ecIndices != NULL) {
             pcl::ExtractIndices<pcl::PointXYZRGBA> extract;
@@ -144,7 +146,6 @@ void CalibUIApp::extractElements(const Cloud::ConstPtr& planeCloud) {
     /* for each cluster, check if it is an element */
     for (auto cluster_is : clusters_indices) {
 
-        std::cout << "[Extract Elements] Process cluster" << std::endl;
         // this is stupid, euclidean clusters won't give shared pointers,
         // but ExtractIndices needs one.
         boost::shared_ptr<pcl::PointIndices> ciptr(new pcl::PointIndices(cluster_is));
@@ -160,33 +161,53 @@ void CalibUIApp::extractElements(const Cloud::ConstPtr& planeCloud) {
         ColorDescriptor cdesc;
         cdesc.compute(elementCloud);
 
-        std::cout << "[Extract Elements] Clouster Hue: " <<
-            cdesc.getPrimaryHue() << std::endl;
+        /* use a default element and computed descritpor from the marker */
+        if (learnDescriptor) {
 
-        /* find a matching ElementType */
-        for (ElementType* etype : elementStorage->getElementTypes()) {
-
-            /* match by hue only */
             float hueDistance = ColorDescriptor::hueDistance(
-                etype->getPrimaryHue(), cdesc.getPrimaryHue());  
+                defaultDescriptor.getPrimaryHue(), cdesc.getPrimaryHue());  
 
-            std::cout << "[Extract Elements] Hue Distance to " <<
-                etype->elementname << ": " << hueDistance << std::endl;
-
-            /* create the element */
             if (hueDistance < maxHueDistance) {
-                Element::Ptr element = etype->createDefaultElement();
+                Element::Ptr element = defaultElementType->createDefaultElement();
                 if (element != NULL) {
                     element->defineFromCloud(elementCloud);
                     elementStorage->addElement(element);
+                    printAddElement(element);
                 }
-            } 
+            }
 
-            //TODO check if the normals of the calib plane and the element
-            // align to some extent.
+        } else {  /* find a matching ElementType from the config */
+
+            for (ElementType* etype : elementStorage->getElementTypes()) {
+
+                /* match by hue only */
+                float hueDistance = ColorDescriptor::hueDistance(
+                    etype->getPrimaryHue(), cdesc.getPrimaryHue());  
+
+                /* create the element */
+                if (hueDistance < maxHueDistance) {
+                    Element::Ptr element = etype->createDefaultElement();
+                    if (element != NULL) {
+                        element->defineFromCloud(elementCloud);
+                        elementStorage->addElement(element);
+                        printAddElement(element);
+                    }
+                } 
+
+                //TODO check if the normals of the calib plane and the element
+                // align to some extent.
+            }
+
         }
 
     }
+}
+
+
+void CalibUIApp::printAddElement(const Element::Ptr& element) {
+    std::cout << "Adding a Element:" << std::endl;
+    std::cout << "    Type: " << element->elementTypeName << std::endl;
+    std::cout << "    Hull Size: " << element->hullCloud->size() << std::endl;
 }
 
 

@@ -38,10 +38,16 @@ class CalibUIApp : public OpenNiInterfaceConnection {
         typedef typename OpenNiInterface::Cloud Cloud;
 
         CalibUIApp(const OpenNiInterface::Ptr& oniif,
-                    const ElementStorage::Ptr& estore) :
+                    const ElementStorage::Ptr& estore,
+                    const bool learnDescriptor,
+                    ElementType* defaultElementType,
+                    float maxHueDistance=10.0f) :
             OpenNiInterfaceConnection(oniif),
             elementStorage(estore),
-            viewer("Cloud Viewer")
+            viewer("Cloud Viewer"),
+            learnDescriptor(learnDescriptor),
+            defaultElementType(defaultElementType),
+            maxHueDistance(maxHueDistance)
         {
 
             /* setup plane marker */
@@ -68,9 +74,17 @@ class CalibUIApp : public OpenNiInterfaceConnection {
         bool doQuit = false;
 
         ElementStorage::Ptr elementStorage;
+
+        /* learn color descriptor from calib pattern */
+        bool learnDescriptor;
+        ElementType* defaultElementType;
+        ColorDescriptor defaultDescriptor;
+
+
         PlaneMarker<pcl::PointXYZRGBA> planeMarker;
 
         void extractElements(const Cloud::ConstPtr& planeCloud);
+        void printAddElement(const Element::Ptr& element);
 
         /* some calibration parameters */
         // the maximum distance between two elements
