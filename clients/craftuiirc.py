@@ -43,6 +43,7 @@ class CraftUIIRC:
         self._connect()
 
         self.postLines = []
+        self.messageTimestamps = {}
 
 
 
@@ -66,6 +67,19 @@ class CraftUIIRC:
     def postLine(self, line):
         with self._lock:
             self.postLines.append(line)
+
+
+    def postLinesRateLimited(self, key, minDuration, lines):
+        currentTime = time.time()
+        if (self.messageTimestamps.has_key(key)):
+            lastTime = messageTimestamps[key]
+            if (lastTime + minDuration < currentTime):
+                return
+        
+        self.messageTimestamps[key] = currentTime
+        with self._lock:
+            self.postLines.extend(lines)
+
 
 
     def _connect(self):

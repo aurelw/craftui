@@ -18,14 +18,10 @@
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 #
 
-import unicodedata
 import re
 import os
 
-import zmq
-
-import uievents_pb2
-import craftuiirc
+from craftui_eventsubscriber import EventSubscriber
 
 
 
@@ -39,44 +35,12 @@ def toggleChico(port):
     os.system('sispmctl -t ' + ports + " > /dev/null")
 
 
-class EventSubscriber:
-
-    def __init__(self, address):
-        self.addr = address
-        self.context = zmq.Context()
-        self.socket = self.context.socket(zmq.SUB)
-        self.connected = False
-
-
-    def connect(self):
-        self.socket.connect(self.addr)
-        # IMPORTANT subscribe to all messages
-        self.socket.setsockopt_string(zmq.SUBSCRIBE, u"")
-        self.connected = True
-
-
-    def receiveEvent(self):
-        if not self.connected:
-            return None
-
-        msg = self.socket.recv_string()
-        msgstr = unicodedata.normalize('NFKD', msg).encode('ascii','ignore')
-        event = uievents_pb2.Event()
-        event.ParseFromString(msgstr)
-        return event
-
-
-
 
 def main():
 
     evs = EventSubscriber("tcp://127.0.0.1:9001")
     evs.connect()
     print("Connected: ", evs.connected)
-
-    ircclient = craftuiirc.CraftUIIRC("irc.servus.at", 6667, "#test")
-    ircclient.start()
-    
 
     while True:
         event = evs.receiveEvent()
@@ -102,13 +66,6 @@ def main():
             setLolStripe("G")
         if event.id == "button_blue" and event.trigger == event.TRIGGERED:
             setLolStripe("B")
-        if event.id == "button_black" and event.trigger == event.TRIGGERED:
-            ircclient.postLine("Someone says Hi at the window!")
-            #toggleChico(2)
-
-    ircclient.stop()
-
-
 
 
 
