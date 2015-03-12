@@ -81,8 +81,7 @@ class CraftUIIRC:
         
         self.messageTimestamps[key] = currentTime
         with self._lock:
-            #self.postLines.extend(lines)
-            print "print"
+            self.postLines.extend(lines)
 
 
 
