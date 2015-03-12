@@ -72,7 +72,7 @@ class CraftUIIRC:
     def postLinesRateLimited(self, key, minDuration, lines):
         currentTime = time.time()
         if (self.messageTimestamps.has_key(key)):
-            lastTime = messageTimestamps[key]
+            lastTime = self.messageTimestamps[key]
             if (lastTime + minDuration < currentTime):
                 return
         
