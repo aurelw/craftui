@@ -69,7 +69,6 @@ class CraftUIIRC:
 
 
     def _connect(self):
-        print "_connect"
         c = None
         ssl_factory = irc.connection.Factory(wrapper=ssl.wrap_socket)
         self.reactor = irc.client.Reactor()
@@ -123,17 +122,12 @@ class CraftUIIRC:
 
     def handle_messages(self):
 
-        print "enter main_loop"
-
         if not self.connection.is_connected() or not self.isJoined:
             return
 
         with self._lock:
             while self.postLines != []:
                 self.connection.privmsg(self.channel, self.postLines.pop(0))
-
-        print "leave main_loop"
-
 
 
 def main():
