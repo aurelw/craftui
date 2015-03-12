@@ -13,7 +13,9 @@ A simple test installation can be seen in this [Video](http://devlol.soup.io/pos
 #### IPC
 Craftui broadcasts UI events on a ZeroMQ socket. The event protcol is defined via protobuf. In the ./clients/ directory there are simple python clients which process these events, execute actions or forward the events to other channels like MQTT.
 
-#### Calibration Workflow and Setup.
+#### Calibration Workflow and Setup. The 12 step program.
+1. Admitting that gesture based systems are powerless in daylight environments and that complex calibration process are unmanagable.
+2. Came to believe that a simple, hitvolume based system, directly on the glass surface is of greater power in many situations and that an intuitve and tactile calibration process could restore us to sanity.
 1. Use **craftui_init_config** to create a default config. Now edit the size of your calibration sheet, default is A4.
 2. (optional) Calibrate a color descriptor for each ElementType (slider, button, calibrationtemplate) to identify the the in the subsequent calibration step. This is done with **craftui_calib_template**. Tape a colored sheet to the glass surface. The border of the sheet must have a distance of about 10cm to any other visible object or window frame. Press [c] to capture a frame and select the ElementType to assign the color to.
 3. Cut out the shape of your UI elements (buttons) and tape them to the glass. As before, tape the calibration sheet to the surface. It is used to define the plane and coordinate frame of the window. The Kinec must be placed in a way that the sheet and all elements are visible. Facing the Kinect at an angle to the glass reduces problems with reflection. Make sure that the Kinect is mounted and stable since geometric calibration is done in the next step.
