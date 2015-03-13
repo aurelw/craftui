@@ -26,7 +26,7 @@
 
 
 void print_usage() {
-    std::cout << "craftui -c <config> [--noui]" << std::endl;
+    std::cout << "craftui -c <config> [--noui] [--vis-hulls]" << std::endl;
 }
 
 
@@ -40,6 +40,7 @@ int main(int argc, char **argv) {
     }
 
     bool with3DUI = ! (pcl::console::find_switch(argc, argv, "--noui"));
+    bool visHulls = pcl::console::find_switch(argc, argv, "--vis-hulls");
     
     /* setup element storage */
     std::string filepath;
@@ -61,7 +62,7 @@ int main(int argc, char **argv) {
     openNiIf->waitForFirstFrame();
 
     /* create the app and run it */
-    CraftUIApp app(openNiIf, eStore, with3DUI);
+    CraftUIApp app(openNiIf, eStore, with3DUI, visHulls);
     app.run();
 
     exit(0);
