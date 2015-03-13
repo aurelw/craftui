@@ -26,3 +26,10 @@ Craftui broadcasts UI events on a ZeroMQ socket. The event protcol is defined vi
 7. Attach a client to craftui. Sample clients written in python are included in the ./clients/ directory. Run **craftui_print_event.py** and test the UI. MQTT examples are also included.
 8. Fine tune the distance and threshold settings for each element. This must be done manually in the config file at this point. However, the default settings usually work just fine.
 9. Enjoy! Attach hardware, sofware and whatnot to CraftUI.
+
+#### TODO
+* An event logging client.
+* Framelimiting in the main application.
+* Optimize intersection tests.
+* Sleep/Standby mode, possible with dynmic framelimiting. Or a special On/Standby Button type.
+* A simple UI for the setup and calibration process. Glue for the individual executables. "zenity" doesn't provide good menus, python3-easygui no longer maintained, alternatives are not available in debian,.... Possible go for full Python+Qt. 
