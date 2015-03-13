@@ -28,8 +28,9 @@ Craftui broadcasts UI events on a ZeroMQ socket. The event protcol is defined vi
 9. Enjoy! Attach hardware, sofware and whatnot to CraftUI.
 
 #### TODO
-* An event logging client.
-* Framelimiting in the main application.
-* Optimize intersection tests.
-* Sleep/Standby mode, possible with dynmic framelimiting. Or a special On/Standby Button type.
-* A simple UI for the setup and calibration process. Glue for the individual executables. "zenity" doesn't provide good menus, python3-easygui no longer maintained, alternatives are not available in debian,.... Possible go for full Python+Qt. 
+* [x] Visualize Hull Clouds.
+* [ ] An event logging client. :star:
+* [ ] Framelimiting in the main application.
+* [ ] Optimize intersection tests.
+* [ ] Sleep/Standby mode, possible with dynmic framelimiting. Or a special On/Standby Button type.
+* [ ] A simple UI for the setup and calibration process. Glue for the individual executables. "zenity" doesn't provide good menus, python3-easygui no longer maintained, alternatives are not available in debian,.... Possible go for full Python+Qt. 
