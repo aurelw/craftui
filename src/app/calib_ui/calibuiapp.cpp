@@ -22,6 +22,7 @@
 #include <pcl/filters/plane_clipper3D.h>
 
 #include "craftui_mathutils.h"
+#include "craftui_cloudutils.h"
 
 
 
@@ -94,6 +95,7 @@ void CalibUIApp::run() {
     int idx = 0;
     auto elements = elementStorage->getElements();
     for (auto element : elementStorage->getElements()) {
+        colorCloud(255, 0, 0, element->hullCloud);
         viewer.showCloud(element->hullCloud, std::to_string(idx++));
     }
 

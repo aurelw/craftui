@@ -39,16 +39,21 @@ class CraftUIApp : public OpenNiInterfaceConnection {
 
         CraftUIApp(const OpenNiInterface::Ptr& oniif,
                     const ElementStorage::Ptr& estore,
-                    bool with3DUI=true) :
+                    bool with3DUI=true,
+                    bool visHulls=true) :
             OpenNiInterfaceConnection(oniif),
             elementStorage(estore),
-            withViewer(with3DUI)
+            withViewer(with3DUI),
+            visHulls(visHulls)
         {
 
             if (withViewer) {
                 viewer.reset(new pcl::visualization::CloudViewer("CraftUI"));
                 viewer->registerKeyboardCallback(
                         &CraftUIApp::viewerKeyboardCallback, *this);
+                if (visHulls) {
+                    showHullClouds();
+                }
             }
 
         }
@@ -58,15 +63,19 @@ class CraftUIApp : public OpenNiInterfaceConnection {
         void viewerKeyboardCallback(
                 const pcl::visualization::KeyboardEvent &, void *);
 
+
     private:
 
         bool withViewer;
+        bool visHulls;
         std::shared_ptr<pcl::visualization::CloudViewer> viewer;
         bool doQuit = false;
 
         int numThreshSamples = 100;
 
         ElementStorage::Ptr elementStorage;
+
+        void showHullClouds();
 };
 
 #endif

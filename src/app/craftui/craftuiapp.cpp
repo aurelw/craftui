@@ -22,6 +22,7 @@
 #include <pcl/filters/plane_clipper3D.h>
 
 #include "craftui_mathutils.h"
+#include "craftui_cloudutils.h"
 #include "dynamicthreshcalib.h"
 #include "eventgenerator.h"
 
@@ -68,7 +69,6 @@ void CraftUIApp::run() {
 }
 
 
-
 void CraftUIApp::viewerKeyboardCallback(
         const pcl::visualization::KeyboardEvent& ev, void *)
 {
@@ -76,4 +76,16 @@ void CraftUIApp::viewerKeyboardCallback(
         doQuit = true;
     }
 }   
+
+
+void CraftUIApp::showHullClouds() {
+    if (!withViewer) return;
+
+    int idx = 0;
+    for (auto element : elementStorage->getElements()) {
+        idx++;
+        colorCloud(255, 0, 0, element->hullCloud);
+        viewer->showCloud(element->hullCloud, std::to_string(idx++));
+    }
+}
 
