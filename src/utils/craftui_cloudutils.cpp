@@ -30,4 +30,3 @@ void colorCloud(int r, int g, int b,
         p.b = b;
     }
 }
-
