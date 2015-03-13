@@ -30,7 +30,8 @@ Craftui broadcasts UI events on a ZeroMQ socket. The event protcol is defined vi
 #### TODO
 * [x] Visualize Hull Clouds.
 * [ ] An event logging client. :star:
+* [ ] Generic MQTT client. Publishes all events to an MQTT broker.
 * [ ] Framelimiting in the main application.
 * [ ] Optimize intersection tests.
 * [ ] Sleep/Standby mode, possible with dynmic framelimiting. Or a special On/Standby Button type.
-* [ ] A simple UI for the setup and calibration process. Glue for the individual executables. "zenity" doesn't provide good menus, python3-easygui no longer maintained, alternatives are not available in debian,.... Possible go for full Python+Qt. 
+* [ ] A simple UI for the setup and calibration process. Glue for the individual executables. "zenity" doesn't provide good menus, python3-easygui no longer maintained, alternatives are not available in debian,.... Possible go for full Python+Qt.
