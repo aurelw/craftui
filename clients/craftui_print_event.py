@@ -20,35 +20,108 @@
 
 import re
 import os
+import sys
+import time
+import datetime
+import argparse
 
 from craftui_eventsubscriber import EventSubscriber
+
+
+def fullEventString(event):
+        ### Print Event Info ###
+        s = "########################\n"
+        s += event.id + " - " + str(datetime.datetime.now()) + "\n"
+        if event.elementtype == event.BUTTON:
+            s += "  Type: BUTTON\n" 
+        elif event.elementtype == event.SLIDER:
+            print "  Type: SLIDER\n" 
+
+        if event.trigger == event.TRIGGERED:
+            print "  Triggered!\n"
+        elif event.trigger == event.UNTRIGGERED:
+            print "  Untriggered!\n"
+        elif event.trigger == event.INTRIGGER:
+            print "  Intrigger.\n"
+
+        if s[-1:] == '\n':
+            return s[:-1]
+        else:
+            return s
+
+def shortEventString(event):
+    s = "[" + str(datetime.datetime.now()) + "] "
+    s += event.id + ": "
+    if event.trigger == event.TRIGGERED:
+        s += "triggered."
+    elif event.trigger == event.UNTRIGGERED:
+        s += "untrigdered."
+    elif event.trigger == event.INTRIGGER:
+        s += "intrigger."
+    return s
+
+
+def printHelp():
+    print "craftui_print_events [--host <host>] [-p <port>] [--short] [--logfile <filename>]"
 
 
 
 def main():
 
+    ## Parse Command Line Arguments
+    if "-h" in sys.argv or "--help" in sys.argv:
+        printHelp()
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--host", default="127.0.0.1")
+    parser.add_argument("-p", type=int, default=9001)
+    parser.add_argument("--short", default=False, action="store_true")
+    parser.add_argument("--logfile")
+    args = parser.parse_args() 
+
+    printShort = args.short
+
+    doLogfile = (args.logfile != None)
+    fname = args.logfile
+
+    ## Connect to CraftUI
+    hostUrl = "tcp://" + args.host + ":" + str(args.p)
+    sys.stdout.write("Connecting.... ") 
     evs = EventSubscriber("tcp://127.0.0.1:9001")
     evs.connect()
-    print("Connected: ", evs.connected)
-    
+    if evs.connected:
+        print "done."
+    else:
+        print "ERROR."
+        sys.exit(1)
 
+    ## Open the logfile in append mode.
+    logfile = None
+    if doLogfile:
+        try:
+            logfile = open(fname, "a")
+            print "Appending to logfile '" + fname + "'"
+        except:
+            print "Error accesing logfile."
+            exit(1)
+
+    ## Process events
     while True:
         event = evs.receiveEvent()
+        if printShort:
+            s = shortEventString(event)
+        else:
+            s = fullEventString(event)
 
-        ### Print Event Info ###
-        print "########################"
-        print event.id + ":"
-        if event.elementtype == event.BUTTON:
-            print "  Type: BUTTON" 
-        elif event.elementtype == event.SLIDER:
-            print "  Type: SLIDER" 
+        print(s)
+        if logfile:
+            logfile.write(s)
+            logfile.write("\n")
 
-        if event.trigger == event.TRIGGERED:
-            print "  Triggered!"
-        elif event.trigger == event.UNTRIGGERED:
-            print "  Untriggered!"
-        elif event.trigger == event.INTRIGGER:
-            print "  Intrigger."
+
+    # Close the file
+    if logfile:
+        logfile.close()
 
 
 if __name__ == "__main__":

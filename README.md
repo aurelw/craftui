@@ -29,7 +29,7 @@ Craftui broadcasts UI events on a ZeroMQ socket. The event protcol is defined vi
 
 #### TODO
 * [x] Visualize Hull Clouds.
-* [ ] An event logging client. :star:
+* [x] An event logging client. - Implemented craftui_print_event.py
 * [x] Generic MQTT client. Publishes all events to an MQTT broker.
 * [ ] Framelimiting in the main application.
 * [ ] Optimize intersection tests.
