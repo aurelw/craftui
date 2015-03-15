@@ -28,6 +28,12 @@ from craftui_eventsubscriber import EventSubscriber
 def setLolStripe(color):
     os.system("mosquitto_pub -h 192.168.7.2 -t led -m x" + color*60 )
 
+def displayHi5():
+    os.system("mosquitto_pub -h 192.168.7.2 -t lolshield/oneshot -m \"  Hi5!!   Hi5!!   Hi5!! \"")
+
+def displayHelloOnIRC():
+    os.system("mosquitto_pub -h 192.168.7.2 -t lolshield/oneshot -m \"CRAFTUI:  You just posted Hello to our IRC channel!\"")
+
 
 def toggleChico(port):
     ports = str(port) 
