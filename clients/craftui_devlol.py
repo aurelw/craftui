@@ -79,8 +79,10 @@ def main():
         ### Print to IRC ###
         if event.id == "button_black" and event.trigger == event.TRIGGERED:
             ircclient.postLinesRateLimited("hi", 10, ["Someone says Hi at the window!"])
+            displayHelloOnIRC()
         if event.id == "buttonHi5" and event.trigger == event.TRIGGERED:
             ircclient.postLinesRateLimited("hi5", 10, ["Hi 5!"])
+            displayHi5()
             #toggleChico(2)
 
     ircclient.stop()
