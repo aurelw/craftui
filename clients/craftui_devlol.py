@@ -25,6 +25,10 @@ import craftuiirc
 from craftui_eventsubscriber import EventSubscriber
 
 
+
+def setProjMappingColor(color):
+    os.system("mosquitto_pub -h 192.168.7.2 -t beamer/projmap/color -m " + color)
+
 def setLolStripe(color):
     os.system("mosquitto_pub -h 192.168.7.2 -t led -m x" + color*60 )
 
@@ -71,10 +75,13 @@ def main():
         ### The LoL strip ###
         if event.id == "button_red" and event.trigger == event.TRIGGERED:
             setLolStripe("R")
+            setProjMappingColor("R")
         if event.id == "button_green" and event.trigger == event.TRIGGERED:
             setLolStripe("G")
+            setProjMappingColor("G")
         if event.id == "button_blue" and event.trigger == event.TRIGGERED:
             setLolStripe("B")
+            setProjMappingColor("B")
 
         ### Print to IRC ###
         if event.id == "button_black" and event.trigger == event.TRIGGERED:
