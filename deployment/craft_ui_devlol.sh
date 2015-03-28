@@ -14,7 +14,7 @@ USER="lol"
 CRAFTUI_ROOT="/home/$USER/packages/craftui/"
 CRAFTUI_CONFIG="$CRAFTUI_ROOT/build/bin/devlol_window.xml"
 LOLSHIELD_ROOT="/home/$USER/packages/lolshield/"
-WINKEKATZE_ROOT="/home/$USER/packages/lolshield/"
+WINKEKATZE_ROOT="/home/$USER/packages/winkekatze/"
 
 MQTT_BROKER="192.168.7.2"
 LOGFILE="$CRAFTUI_ROOT/clients/events.log"
@@ -29,7 +29,7 @@ case "$1" in
         echo "Starting craftui and clients"
         cd $CRAFTUI_ROOT
         screen -S craftui -d -m bash -c "./build/bin/craftui -c $CRAFTUI_CONFIG --noui"
-        screen -S craftui_client -d -m bash -c "./clients/craftui_devlol.py"
+        screen -S craftui_client -d -m bash -c "./clients/craftui_devlol.py $MQTT_BROKER"
         screen -S craftui_mqtt -d -m bash -c "./clients/craftui_mqtt_pub.py $MQTT_BROKER"
         screen -S craftui_log -d -m bash -c "./clients/craftui_print_event.py --logfile $LOGFILE --short"
 

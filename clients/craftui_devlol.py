@@ -26,17 +26,17 @@ from craftui_eventsubscriber import EventSubscriber
 
 
 
-def setProjMappingColor(color):
-    os.system("mosquitto_pub -h 192.168.7.2 -t beamer/projmap/color -m " + color)
+def setProjMappingColor(color, host):
+    os.system("mosquitto_pub -h " + host + " -t beamer/projmap/color -m " + color)
 
-def setLolStripe(color):
-    os.system("mosquitto_pub -h 192.168.7.2 -t led -m x" + color*60 )
+def setLolStripe(color, host):
+    os.system("mosquitto_pub -h " + host + " -t led -m x" + color*60 )
 
-def displayHi5():
-    os.system("mosquitto_pub -h 192.168.7.2 -t lolshield/oneshot -m \"  Hi5!!   Hi5!!   Hi5!! \"")
+def displayHi5(host):
+    os.system("mosquitto_pub -h " + host + " -t lolshield/oneshot -m \"  Hi5!!   Hi5!!   Hi5!! \"")
 
-def displayHelloOnIRC():
-    os.system("mosquitto_pub -h 192.168.7.2 -t lolshield/oneshot -m \"CRAFTUI:  You just posted Hello to our IRC channel!\"")
+def displayHelloOnIRC(host):
+    os.system("mosquitto_pub -h " + host + " -t lolshield/oneshot -m \"CRAFTUI:  You just posted Hello to our IRC channel!\"")
 
 
 def toggleChico(port):
@@ -46,6 +46,10 @@ def toggleChico(port):
 
 
 def main():
+
+    brokerhost = "localhost"
+    if (len(sys.argv) > 1):
+        brokerhost = sys.argv[1]
 
     evs = EventSubscriber("tcp://127.0.0.1:9001")
     evs.connect()
@@ -74,22 +78,22 @@ def main():
 
         ### The LoL strip ###
         if event.id == "button_red" and event.trigger == event.TRIGGERED:
-            setLolStripe("R")
-            setProjMappingColor("R")
+            setLolStripe("R", brokerhost)
+            setProjMappingColor("R", brokerhost)
         if event.id == "button_green" and event.trigger == event.TRIGGERED:
-            setLolStripe("G")
-            setProjMappingColor("G")
+            setLolStripe("G", brokerhost)
+            setProjMappingColor("G", brokerhost)
         if event.id == "button_blue" and event.trigger == event.TRIGGERED:
-            setLolStripe("B")
-            setProjMappingColor("B")
+            setLolStripe("B", brokerhost)
+            setProjMappingColor("B", brokerhost)
 
         ### Print to IRC ###
         if event.id == "button_black" and event.trigger == event.TRIGGERED:
             ircclient.postLinesRateLimited("hi", 10, ["Someone says Hi at the window!"])
-            displayHelloOnIRC()
+            displayHelloOnIRC(brokerhost)
         if event.id == "buttonHi5" and event.trigger == event.TRIGGERED:
             ircclient.postLinesRateLimited("hi5", 10, ["Hi 5!"])
-            displayHi5()
+            displayHi5(brokerhost)
             #toggleChico(2)
 
     ircclient.stop()
