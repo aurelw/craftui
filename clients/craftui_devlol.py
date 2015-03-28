@@ -20,6 +20,7 @@
 
 import re
 import os
+import sys
 
 import craftuiirc
 from craftui_eventsubscriber import EventSubscriber
