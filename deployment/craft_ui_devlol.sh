@@ -12,8 +12,9 @@
 
 USER="lol"
 CRAFTUI_ROOT="/home/$USER/packages/craftui/"
-LOLSHIELD_ROOT="/home/$USER/packages/lolshield/"
 CRAFTUI_CONFIG="$CRAFTUI_ROOT/build/bin/devlol_window.xml"
+LOLSHIELD_ROOT="/home/$USER/packages/lolshield/"
+WINKEKATZE_ROOT="/home/$USER/packages/lolshield/"
 
 MQTT_BROKER="192.168.7.2"
 LOGFILE="$CRAFTUI_ROOT/clients/events.log"
@@ -38,6 +39,11 @@ case "$1" in
         # wait some time for the arduino to come up
         sleep 10
         screen -S lolshield -d -m bash -c "./lolcontrol/lolshield_mqtt.py --host $MQTT_BROKER"
+
+        # start winkekatze
+        cd $WINKEKATZE_ROOT
+        echo "Starting winkekatze...."
+        screen -S winkekatze -d -m bash -c "./winkekatze_mqtt.py --host $MQTT_BROKER"
 EOF
 
     ;;
@@ -52,6 +58,11 @@ EOF
         then
             echo "Stop lolshield"
             kill -9 `pgrep lolshield`
+        fi
+        if [ "`pgrep winkekatze`" ] 
+        then
+            echo "Stop winkekatze"
+            kill -9 `pgrep winkekatze`
         fi
 
     ;;
