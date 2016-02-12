@@ -179,12 +179,21 @@
                             <h2>Interoperability, MQTT and Usescases</h2>
                         </div>
                         <div class="section-text">
-                            <p>CraftUI can publishes MQTT messages which we use control IoT devices. At our hackerspace, the first permanent installation of CraftUI, someone can control the color of multiple lights, post a message to IRC, start a disco ball, control a browser game, get feedback messages on an LED display or show real time public transport data. We also experimented with a beamer and projection mapping setup. The most popular interaction however is a small, MQTT controlled Maneki-neko, a Japanese lucky cat, which starts to wave when a certain button is touched.</p>
-                        </div>
-                        <div class="section-text">
-                            <p>In the fist 8 months, tho the window is located in a rather quiet street, we counted about 1000 users. In general, feedback was very positive so far.
+                            <div class="row">
+                                <div class="col-lg-10 text-center">
+                                    <div class="intro-text">
+                                        <p>CraftUI publishes MQTT messages which we use to control IoT devices. At our hackerspace, the first permanent installation of CraftUI, someone can control the color of multiple lights, post a message to IRC, start a disco ball, control a browser game, get feedback messages on an LED display or show real time public transport data. We also experimented with a beamer and projection mapping setup. The most popular interaction however is a small, MQTT controlled Maneki-neko, a Japanese lucky cat, which starts to wave when a certain button is touched.</p><p>In the fist 8 months, tho the window is located in a rather quiet street, we counted about 1000 users. In general, feedback was very positive so far.
 
-                            We want CraftUI to be a simple tool which just publishes UI events and be part of art installations, games, interactive shopping windows, etc.</p>
+                                        We want CraftUI to be a simple tool which just publishes UI events and be part of art installations, games, interactive shopping windows, etc.</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 text-center">
+                                    <a data-lightbox="image" class="thumbnail" href="images/beamer.jpg" target="_blank">
+                                    <img src="images/beamer_tn.png" class="img-responsive">
+                                    </a>
+                                </div>
+                            </div>
+                            <p></p>
                         </div>
                     </div>
                 </div>
@@ -212,6 +221,10 @@
                     <div class="col-lg-12 text-center">
                         <div class="section-title">
                             <h2>Roadmap</h2>
+                        </div>
+                        <div class="section-text">
+                            <p>CraftUI is still a prototypical application written in C++ and runs on linux. It is available on github and published under GPL [1]. I (Aurel) have also written a small utility library for faster hitbox collision tests at my day job, which I am free to use and integrate with CraftUI (BSD licence) [2]. With this integration, we will have more than enough performance for a mobile platform.</p>
+                            <p>We are not sure yet how much of the old, native code would be ported to Android. However, we can think about the following roadmap to be a good perspective for future development.</p>
                         </div>
                         <ul class="timeline">
                             <li>
@@ -284,6 +297,9 @@
                                 </div>
                             </li>
                         </ul>
+                        <div class="section-text">
+                            <p>We also plan to work on other UI components like sliders. In principal we could also support surfaces like walls or table tops, not just glass surfaces, but further testing is needed to really ensure a flawless user experience.</p>
+                        </div>
                     </div>
         </section>
         <section id="team" class="dark-bg">
