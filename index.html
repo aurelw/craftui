@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="favicon.ico">
+        <title>CraftUI</title>
+        <!-- Bootstrap core CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <!-- Custom styles for this template -->
+        <link href="css/owl.carousel.css" rel="stylesheet">
+        <link href="css/owl.theme.default.min.css"  rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/lightbox.css" rel="stylesheet">
+    </head>
+    <body id="page-top">
+        <!-- Navigation -->
+        <!-- Header -->
+        <header>
+            <div class="container">
+                <div class="slider-container">
+                    <div class="intro-text">
+                        <div class="row">
+                            <div class="col-sm-6 col-sm-offset-6">
+                                <div class="intro-heading">A plug and play solution for large-scale touch interfaces.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <section id="intro" class="dark-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <div class="section-title">
+                            <h2>CraftUI</h2>
+                            <p>CraftUI lets you create touch interfaces on physical surfaces and was initially developed for glass surfaces like public show windows. While this is a very basic concept, we believe that CraftUI distinguishes itself from many other multi touch technologies in a way that it is a much more practical solution for many applications.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.container -->
+        </section>
+        <section id="intro" class="light-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <div class="section-title">
+                            <h2>Introduction</h2>
+                        </div>
+                        <div class="section-text">
+                            <div class="row">
+                                <div class="col-lg-10 text-center">
+                                    <div class="intro-text">
+                                        <p>In early 2015 we started to implement a touch interface for the public display window of /dev/lol, a hackerspace in Linz, Austria. We wanted to give people a way to interact with our projects and reach out to simple pedestrian which would otherwise not be interested in what we are doing. A complicated interface, which would have any learning curve, and which wouldn't be self-explanatory was therefore out of the question. Therefore, it worked best for us to draw some virtual buttons on the glass, which people would touch while standing on the street.</p>
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-2 text-center">
+                                    <a data-lightbox="image" class="thumbnail" href="images/window_setup.jpg" target="_blank">
+                                    <img src="images/window_setup_tn.jpg" class="img-responsive" alt="author">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-2 text-center">
+                                    <a data-lightbox="image" class="thumbnail" href="images/window_users.jpg" target="_blank">
+                                    <img src="images/window_users_tn.jpg" class="img-responsive" alt="author">
+                                    </a>
+                                </div>
+                                <div class="col-lg-10 text-center">
+                                    <div class="intro-text">
+                                        <p>Our experience with other 3D vision applications tells us, that there are many pitfalls and details which can render a great application completely worthless in practice. With computer vision application targeting end-users without expert knowledge, calibration processes, stability and robustness pose big problems. With CraftUI we have the goal to create a true practical application which addresses these issues properly. We try to keep CraftUI a simple tool and on the other hand do this simple things just perfectly right.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.container -->
+        </section>
+        <section id="intro" class="dark-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <div class="section-title">
+                            <h2>Process</h2>
+                        </div>
+                        <div class="section-text">
+                            <p>
+                            Setting up a glass surface as a touch interface should be easy for anybody. Therefore, we created a very tactile, one-click process to specify and calibrate the UI! Calibration in general is often painful and tedious. What CraftUI does, it takes calibration, and combines it with a creative process of designing an artistic UI. Actually, calibration can be fun.</p>
+                        </div>
+                        <div class="section-text">
+                            <p>"Craft" as in "arts and craft". We take several sheets of colored paper, one rectangle with a known size. Then, we cut out the shapes of our buttons and tape everything flat to the glass surface.</p>
+                        </div>
+                        <div class="section-text">
+                            <p>The program then takes one RGBD (RGB + depth) image and extracts the rectangular marker. It then searches for other objects with similar color and creates a hitbox for each match. Then we encircle the paper markers and draw additional information or artwork. Window colors or white board markers work best. After the buttons are well marked, we remove all paper from the glass.</p>
+                        </div>
+                        <div class="section-text">
+                            <p>The program then does some additional auto calibration to suppress any noise introduces introduced by the paintings. The buttons are now ready to use.</p>
+                        </div>
+                    </div>
+                </div>
+            <div class="row row-0-gutter">
+                <!-- start portfolio item -->
+                <div class="col-md-3 col-0-gutter">
+                    <div class="ot-portfolio-item">
+                        <a data-lightbox="process" href="images/process/cal_markers.jpg" target="_blank">
+                        <figure class="effect-bubba">
+                            <img src="images/process/process_1.png" alt="img02" class="img-responsive">
+                            <figcaption>
+                                <h2>First Step</h2>
+                                <p>Layout</p>
+                            </figcaption>
+                        </figure>
+                        </a>
+                    </div>
+                </div>
+                <!-- end portfolio item -->
+                <!-- start portfolio item -->
+                <div class="col-md-3 col-0-gutter">
+                    <div class="ot-portfolio-item">
+                        <a data-lightbox="process" href="images/process/cal_draw_1.jpg" target="_blank">
+                        <figure class="effect-bubba">
+                            <img src="images/process/process_2.png" alt="img02" class="img-responsive">
+                            <figcaption>
+                                <h2>Second Step</h2>
+                                <p>Transfer Buttons to Surface</p>
+                            </figcaption>
+                        </figure>
+                        </a>
+                    </div>
+                </div>
+                <!-- end portfolio item -->
+                <!-- start portfolio item -->
+                <div class="col-md-3 col-0-gutter">
+                    <div class="ot-portfolio-item">
+                        <a data-lightbox="process" href="images/process/cal_draw_2.jpg" target="_blank">
+                        <figure class="effect-bubba">
+                            <img src="images/process/process_3.png" alt="img02" class="img-responsive">
+                            <figcaption>
+                                <h2>Third Step</h2>
+                                <p>Style Buttons</p>
+                            </figcaption>
+                        </figure>
+                        </a>
+                    </div>
+                </div>
+                <!-- end portfolio item -->
+                <!-- start portfolio item -->
+                <div class="col-md-3 col-0-gutter">
+                    <div class="ot-portfolio-item">
+                        <a data-lightbox="process" href="images/process/cal_button.jpg" target="_blank">
+                        <figure class="effect-bubba">
+                            <img src="images/process/process_4.png" alt="img02" class="img-responsive">
+                            <figcaption>
+                                <h2>Finally</h2>
+                                <p>Use your super fany buttons</p>
+                            </figcaption>
+                        </figure>
+                        </a>
+                    </div>
+                </div>
+                <!-- end portfolio item -->
+            </div>
+        </section>
+        <section id="intro" class="light-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <div class="section-title">
+                            <h2>Interoperability, MQTT and Usescases</h2>
+                        </div>
+                        <div class="section-text">
+                            <p>CraftUI can publishes MQTT messages which we use control IoT devices. At our hackerspace, the first permanent installation of CraftUI, someone can control the color of multiple lights, post a message to IRC, start a disco ball, control a browser game, get feedback messages on an LED display or show real time public transport data. We also experimented with a beamer and projection mapping setup. The most popular interaction however is a small, MQTT controlled Maneki-neko, a Japanese lucky cat, which starts to wave when a certain button is touched.</p>
+                        </div>
+                        <div class="section-text">
+                            <p>In the fist 8 months, tho the window is located in a rather quiet street, we counted about 1000 users. In general, feedback was very positive so far.
+
+                            We want CraftUI to be a simple tool which just publishes UI events and be part of art installations, games, interactive shopping windows, etc.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.container -->
+        </section>
+        <section id="intro" class="dark-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <div class="section-title">
+                            <h2>Why Google Tango</h2>
+                        </div>
+                        <div class="section-text">
+                            <p>We understand, that we won't use the key features Google Tango provides, like it's SLAM and tracking features and just make use of a stationary depth camera. However, because of the fast and easy calibration process and the ad hoc 'wiring' with MQTT, we beliefe that CraftUI is ideal for temporary and spontaneous setups. Therefore a mobile platform including a 3D camera gives many benefits. Mounting a separate camera and running cables to laptop is also cumbersome when creating a temporary installation. Having everything integrated in a small and lightweight form factor adds a lot to the practicability.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.container -->
+        </section>
+        <section id="roadmap" class="light-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <div class="section-title">
+                            <h2>Roadmap</h2>
+                        </div>
+                        <ul class="timeline">
+                            <li>
+                                <div class="timeline-badge"><i class="glyphicon glyphicon-rocket"></i></div>
+                                <div class="timeline-panel">
+                                    <div class="timeline-heading">
+                                        <h4 class="timeline-title">May 2016</h4>
+                                    </div>
+                                    <div class="timeline-body"><p>Stabilize current C++ code</p></div>
+                                </div>
+                            </li>
+                            <li class="timeline-inverted">
+                                <div class="timeline-badge"><i class="glyphicon glyphicon-rocket"></i></div>
+                                <div class="timeline-panel">
+                                    <div class="timeline-heading">
+                                        <h4 class="timeline-title">25 May - 28 May 2016</h4>
+                                    </div>
+                                    <div class="timeline-body">
+                                        <p>Test installation at Easterhegg 2016 in Salzburg</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="timeline-badge"><i class="glyphicon glyphicon-rocket"></i></div>
+                                <div class="timeline-panel">
+                                    <div class="timeline-heading">
+                                        <h4 class="timeline-title">April 2016</h4>
+                                    </div>
+                                    <div class="timeline-body"><p>Refactor current C++ code</p></div>
+                                </div>
+                            </li>
+                            <li class="timeline-inverted">
+                                <div class="timeline-badge"><i class="glyphicon glyphicon-rocket"></i></div>
+                                <div class="timeline-panel">
+                                    <div class="timeline-heading">
+                                        <h4 class="timeline-title">May - June 2016</h4>
+                                    </div>
+                                    <div class="timeline-body">
+                                        <p>Port native code to Android and Tango</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="timeline-badge"><i class="glyphicon glyphicon-rocket"></i></div>
+                                <div class="timeline-panel">
+                                    <div class="timeline-heading">
+                                        <h4 class="timeline-title">July - August 2016</h4>
+                                    </div>
+                                    <div class="timeline-body"><p>Create Frontend App</p></div>
+                                </div>
+                            </li>
+                            <li class="timeline-inverted">
+                                <div class="timeline-badge"><i class="glyphicon glyphicon-rocket"></i></div>
+                                <div class="timeline-panel">
+                                    <div class="timeline-heading">
+                                        <h4 class="timeline-title">September - October 2016</h4>
+                                    </div>
+                                    <div class="timeline-body">
+                                        <p>Enhance MQTT integration</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="timeline-badge"><i class="glyphicon glyphicon-flag"></i></div>
+                                <div class="timeline-panel">
+                                    <div class="timeline-heading">
+                                        <h4 class="timeline-title">November - December 2016</h4>
+                                    </div>
+                                    <div class="timeline-body"><p>Work on final release</p></div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+        </section>
+        <section id="team" class="dark-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <div class="section-title">
+                            <h2>Our Team</h2>
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- team member item -->
+                    <div class="col-md-4 col-md-offset-1">
+                        <div class="team-item">
+                            <div class="team-image">
+                                <img src="images/demo/author-2.jpg" class="img-responsive" alt="author">
+                            </div>
+                            <div class="team-text">
+                                <h3>Aurel Wildfellner</h3>
+                                <div class="team-position">CEO</div>
+                                <p>Mida sit una namet, cons uectetur adipiscing adon elit. Aliquam vitae barasa droma.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end team member item -->
+                    <!-- team member item -->
+                    <div class="col-md-4 col-md-offset-2">
+                        <div class="team-item">
+                            <div class="team-image">
+                                <img src="images/doebi.png" class="img-responsive" alt="author">
+                            </div>
+                            <div class="team-text">
+                                <h3>Christoph Döberl</h3>
+                                <div class="team-position">Hacker</div>
+                                <p>Worsa dona namet, cons uectetur dipiscing adon elit. Aliquam vitae fringilla unda mir.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end team member item -->
+                </div>
+            </div>
+        </section>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="js/lightbox.js"></script>
+
+        <!-- Placed at the end of the document so the pages load faster -->
+        <!-- Bootstrap core JavaScript
+            <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+            <script src="js/bootstrap.min.js"></script>
+            <script src="js/owl.carousel.min.js"></script>
+            <script src="js/cbpAnimatedHeader.js"></script>
+            <script src="js/jquery.appear.js"></script>
+            <script src="js/SmoothScroll.min.js"></script>
+            <script src="js/mooz.themes.scripts.js"></script>
+            ================================================== -->
+    </body>
+</html>
