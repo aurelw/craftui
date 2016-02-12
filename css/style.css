@@ -100,7 +100,6 @@ ul li {
     font-weight: 500;
     line-height: 23px;
     letter-spacing: 0.2px;
-    color: #000000;
 }
 
 section ul li:before {
@@ -230,6 +229,7 @@ header {
 header .intro-text {
 	padding-top: 100px;
 	padding-bottom: 50px;
+    text-align: left;
 }
 
 @media (min-width: 768px) {
@@ -241,9 +241,7 @@ header .intro-text {
 
 header .intro-text .intro-lead-in {
 	display: inline-block;
-	background-color: rgba(255, 255, 255, 0.65);
 	margin-bottom: 25px;
-	padding: 4px 20px;
 	font-family: "Open Sans",sans-serif;
 	font-size: 19px;
 	color: #3E3E3E;
@@ -355,9 +353,10 @@ header .intro-text .intro-heading {
 }
 
 .section-text h4 {
-    margin: 0 0 20px;
+    margin: 0 0 8px;
     font-weight: 700;
     font-size: 17px;
+    display: inline-block;
 }
 
 .section-text p {
@@ -605,6 +604,11 @@ figure.effect-bubba:hover p {
 /*--------------------
 4.6. Team
 --------------------*/
+
+.list-text {
+    margin-left: 15px;
+    font-size: 16px;
+}
 
 .team-item {
 	text-align: center;
@@ -1026,7 +1030,7 @@ and (max-width : 480px) {
         top: 16px;
     }
 
-    ul.timeline > li > .timeline-panel {
+/* ul */ul.timeline > li > .timeline-panel {
         float: right;
     }
 
