@@ -9,7 +9,7 @@ option (BUILD_APP "Build with application frontend." ON)
 option (BUILD_TESTS "Build with tests." ON)
 
 # deal with pcl
-find_package(PCL 1.8 REQUIRED)
+find_package(PCL 1.7 REQUIRED)
 include_directories(${PCL_INCLUDE_DIRS})
 link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
