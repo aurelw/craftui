@@ -1,5 +1,6 @@
 set (proto_files uievents.proto)
 execute_process(COMMAND protoc ${proto_files} --cpp_out=${CMAKE_CURRENT_LIST_DIR} WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR})
+execute_process(COMMAND protoc ${proto_files} --python_out=${CMAKE_CURRENT_LIST_DIR}/../../clients WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR})
 
 set (ipc_source_files uievents.pb.cc)
 add_library (ipc ${ipc_source_files})
