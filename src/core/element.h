@@ -56,6 +56,7 @@ class Element {
         int numPointsThresh;
         int dynamicThresh = 0;
         float maxDistance;
+        float thresholdRatio = 0.6; // ratio between trigger/untrigger thresh
 
         /*** collision interface ***/
         /* collide a single point with the ui element */
@@ -64,6 +65,8 @@ class Element {
         virtual pcl::PointIndices::Ptr collideCloud(const Cloud::ConstPtr cloud);
         /* the number of collisions have reached a threshhold */
         virtual bool isTriggered() const;
+        /* the number of collisions are bewlow a threshhold */
+        virtual bool isUntriggered() const;
         /* returns the number of collided points since last reset */
         virtual int getNumCollisions() const;
         /* reset all collisions */

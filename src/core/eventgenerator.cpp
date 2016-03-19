@@ -103,14 +103,14 @@ bool EventGenerator::isElementTriggered(Element& element, const TimePoint& now) 
 
 
 bool EventGenerator::isElementUntriggered(Element& element, const TimePoint& now) {
-    bool eleTriggered = element.isTriggered();
+    bool eleUnTriggered = element.isUntriggered();
 
     /* if the element is not inTrigger it can't be untriggered */
     if (!inTrigger.count(element.id) || !inTrigger[element.id]) {
         return false;
     }
 
-    if (!eleTriggered) {
+    if (eleUnTriggered) {
         if (lastTriggered.count(element.id)) {
             TimePoint last = lastTriggered[element.id];
             TimeDuration duration = now-last;

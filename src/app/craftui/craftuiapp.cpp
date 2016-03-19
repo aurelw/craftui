@@ -54,7 +54,9 @@ void CraftUIApp::run() {
         auto elements = elementStorage->getElements();
 
         /* do all collisions */
-        for (auto element : elements) {
+        #pragma omp parallel for
+        for (int i=0; i<elements.size(); i++) {
+            auto element = elements[i];
             element->resetCollision();
             element->collideCloud(cloud);
             std::cout << element->id << " - " << element->getNumCollisions() <<

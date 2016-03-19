@@ -206,6 +206,11 @@ bool Element::isTriggered() const {
 }
 
 
+bool Element::isUntriggered() const {
+    return (numCollisions < dynamicThresh + numPointsThresh*thresholdRatio);
+}
+
+
 void Element::resetCollision() {
     numCollisions = 0;
 }

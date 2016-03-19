@@ -4,6 +4,12 @@ project(craftui)
 # compiler options
 add_definitions("-std=c++11")
 
+find_package(OpenMP)
+if (OPENMP_FOUND)
+    set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+endif()
+
 # options
 option (BUILD_APP "Build with application frontend." ON)
 option (BUILD_TESTS "Build with tests." ON)
