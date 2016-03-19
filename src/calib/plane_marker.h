@@ -143,7 +143,9 @@ template <typename PointT> bool PlaneMarker<PointT>::computeMarkerCenter(
         PointCloudConstPtr inCloud, 
         PointT& center) 
 {
-    PointCloudConstPtr fcloud = inCloud;
+    PointCloudPtr fcloud(new PointCloud);
+    std::vector<int> pmap;
+    pcl::removeNaNFromPointCloud(*inCloud, *fcloud, pmap);
 
     /* segment all euclidean clusters in the cloud */
     std::vector<pcl::PointIndices> cluster_indices;
