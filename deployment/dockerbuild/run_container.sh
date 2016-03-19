@@ -9,6 +9,6 @@ docker run --name craftui --privileged \
     -e DISPLAY=$DISPLAY \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     -v $XAUTHORITY_FILE:/root/.Xauthority \
-    -ti craftui 
+    -ti craftui/withpcl
 
 #xhost + #enable xhost auth

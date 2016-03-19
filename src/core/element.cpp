@@ -197,7 +197,6 @@ pcl::PointIndices::Ptr Element::collideCloud(const Cloud::ConstPtr cloud) {
     cropHull.filter(collIndices->indices);
 
     numCollisions += collIndices->indices.size();
-
     return collIndices;
 }
 

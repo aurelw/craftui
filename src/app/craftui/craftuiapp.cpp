@@ -32,6 +32,8 @@ void CraftUIApp::run() {
     EventGenerator eventGen;
     Cloud::Ptr capturedCloud;
 
+    std::cout << "Autocalibration of noise threshhold... ";
+
     /* calibrate the dynamic noise threshhold */
     DynamicThreshCalib threshCalib(elementStorage->getElements());
     for (int i=0; i<numThreshSamples; i++) {
@@ -42,6 +44,8 @@ void CraftUIApp::run() {
             if (viewer->wasStopped()) return;
         }
     }
+
+    std::cout << "done" << std::endl;
     
     /* main loop */
     while (!doQuit) {
@@ -53,6 +57,8 @@ void CraftUIApp::run() {
         for (auto element : elements) {
             element->resetCollision();
             element->collideCloud(cloud);
+            std::cout << element->id << " - " << element->getNumCollisions() <<
+               "/" << element->dynamicThresh + element->numPointsThresh << std::endl;
         }
 
         /* process events */
