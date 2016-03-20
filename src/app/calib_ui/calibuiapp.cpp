@@ -28,7 +28,8 @@
 
 void CalibUIApp::run() {
 
-    Cloud::Ptr capturedCloud;
+    Cloud::Ptr capturedCloud(new Cloud);
+    Cloud::Ptr noMarkerCloud(new Cloud);
     Cloud::Ptr planeCloud(new Cloud); 
     Cloud::Ptr emptyCloud(new Cloud); 
     bool foundMarker = false;
@@ -38,7 +39,8 @@ void CalibUIApp::run() {
         viewer.showCloud(cloud);
 
         if (doCaptureMarker) {
-            capturedCloud = cloud;
+            std::vector<int> pmap;
+            pcl::removeNaNFromPointCloud(*cloud, *capturedCloud, pmap);
             /* search for the calibration pattern */
             foundMarker = planeMarker.computeMarkerCenter(capturedCloud, 
                     markerPoint);
@@ -63,19 +65,20 @@ void CalibUIApp::run() {
         extractmarker.setInputCloud(capturedCloud);
         extractmarker.setIndices(planeMarker.markerIndices);
         extractmarker.setNegative(true);
-        extractmarker.filter(*capturedCloud);
+        extractmarker.filter(*noMarkerCloud);
+        viewer.showCloud(noMarkerCloud);
 
         /* get the indicies for all points on the plane */
         pcl::PointIndices::Ptr planeInliers (new pcl::PointIndices ());
         Eigen::Vector4f plane = planeCoefficientsToParameters(
                 *planeMarker.markerCoefficients);
-        pcl::SampleConsensusModelPlane<pcl::PointXYZRGBA> scModelPlane(capturedCloud);
+        pcl::SampleConsensusModelPlane<pcl::PointXYZRGBA> scModelPlane(noMarkerCloud);
         scModelPlane.selectWithinDistance(plane, 
                 uiPlaneTollerance, planeInliers->indices);
        
         /* extract the indices */
         pcl::ExtractIndices<pcl::PointXYZRGBA> extract;
-        extract.setInputCloud(capturedCloud);
+        extract.setInputCloud(noMarkerCloud);
         extract.setIndices(planeInliers);
         extract.filter(*planeCloud);
 

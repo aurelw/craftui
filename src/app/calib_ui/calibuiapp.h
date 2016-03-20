@@ -87,7 +87,7 @@ class CalibUIApp : public OpenNiInterfaceConnection {
         void printAddElement(const Element::Ptr& element);
 
         /* some calibration parameters */
-        // the maximum distance between two elements
+        // the minimum distance between two elements
         float distanceTollerance = 0.015;
         // the maximum difference in hue to match an ElementType
         float maxHueDistance = 10;
