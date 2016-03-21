@@ -10,7 +10,8 @@ RUN apt-get update && \
         libopenni-sensor-primesense0 
 
 RUN apt-get -y install \
-	cmake \
+    cmake \
+    cmake-curses-gui \
 	git \
 	build-essential
 
